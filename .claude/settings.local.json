@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create:*)",
+      "Bash(npx --yes create-vite@latest:*)",
+      "Bash(npm install:*)",
+      "Bash(npx vite build:*)",
+      "Bash(npx vite:*)",
+      "Bash(del:*)",
+      "Bash(cmd /c \"del \\\\?\\\\c:\\\\Users\\\\PC\\\\Desktop\\\\Azim Talikoti\\\\Test\\\\study-plan-website\\\\nul\")",
+      "Bash(cmd /c \"del /f \"\"\\\\?\\\\c:\\\\Users\\\\PC\\\\Desktop\\\\Azim Talikoti\\\\Test\\\\study-plan-website\\\\nul\"\"\")",
+      "Bash(python -c:*)",
+      "Bash(node -e:*)"
+    ]
+  }
+}

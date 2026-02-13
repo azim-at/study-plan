@@ -1,0 +1,795 @@
+{
+  "study_plan": {
+    "title": "Full Stack Developer Interview Study Plan",
+    "prepared_for": "Azim",
+    "role": "Full Stack Developer",
+    "experience": "~3.5 Years",
+    "tech_stack": ["React.js", "Next.js", "Django", "Node.js", "Express.js"],
+    "duration": "4 Weeks (28 Days)",
+    "daily_commitment": "3-4 Hours",
+    "schedule": "Mon-Sat (Sundays = Review & Rest)"
+  },
+  "weeks": [
+    {
+      "week": 1,
+      "title": "JavaScript & Frontend Mastery",
+      "goal": "Solidify JavaScript fundamentals, master React/Next.js concepts, and be able to explain them confidently in interviews.",
+      "total_hours": 24,
+      "days": [
+        {
+          "day": 1,
+          "title": "JavaScript Core Concepts",
+          "topics": [
+            {
+              "name": "Execution Context & Call Stack",
+              "details": "How JS engine executes code, GEC vs FEC"
+            },
+            {
+              "name": "Hoisting",
+              "details": "Variable (var, let, const) and function hoisting, Temporal Dead Zone"
+            },
+            {
+              "name": "Scope & Scope Chain",
+              "details": "Global, function, block scope; lexical scoping"
+            },
+            {
+              "name": "Closures",
+              "details": "Definition, practical uses (data privacy, currying, memoization)"
+            },
+            {
+              "name": "this keyword",
+              "details": "Rules (default, implicit, explicit, new binding), arrow functions"
+            }
+          ],
+          "practice": "Write 5 closure examples, explain output of tricky 'this' snippets",
+          "completed": false
+        },
+        {
+          "day": 2,
+          "title": "Async JavaScript & Event Loop",
+          "topics": [
+            {
+              "name": "Event Loop",
+              "details": "Call Stack, Web APIs, Callback Queue, Microtask Queue"
+            },
+            {
+              "name": "Promises",
+              "details": "States, chaining, Promise.all, Promise.race, Promise.allSettled"
+            },
+            {
+              "name": "Async/Await",
+              "details": "Error handling with try/catch, parallel execution patterns"
+            },
+            {
+              "name": "Callbacks vs Promises vs Async/Await",
+              "details": "Trade-offs, when to use each"
+            },
+            {
+              "name": "setTimeout/setInterval",
+              "details": "Debouncing, throttling implementations"
+            }
+          ],
+          "practice": "Implement Promise.all from scratch, debounce/throttle functions",
+          "completed": false
+        },
+        {
+          "day": 3,
+          "title": "Advanced JavaScript Patterns",
+          "topics": [
+            {
+              "name": "Prototypal Inheritance",
+              "details": "Prototype chain, Object.create, __proto__ vs prototype"
+            },
+            {
+              "name": "ES6+ Features",
+              "details": "Destructuring, spread/rest, Map/Set/WeakMap, generators, iterators"
+            },
+            {
+              "name": "Modules",
+              "details": "CommonJS vs ES Modules, import/export, dynamic imports"
+            },
+            {
+              "name": "Error Handling",
+              "details": "Custom errors, error boundaries, defensive programming"
+            },
+            {
+              "name": "Design Patterns",
+              "details": "Module, Singleton, Observer, Factory, Pub/Sub"
+            }
+          ],
+          "practice": "Implement Observer pattern, create a custom EventEmitter class",
+          "completed": false
+        },
+        {
+          "day": 4,
+          "title": "React.js Core Concepts",
+          "topics": [
+            {
+              "name": "Component Lifecycle",
+              "details": "Mounting, updating, unmounting; functional vs class"
+            },
+            {
+              "name": "Hooks Deep Dive",
+              "details": "useState, useEffect, useRef, useMemo, useCallback, useReducer"
+            },
+            {
+              "name": "State Management",
+              "details": "Lifting state, Context API, when to use Redux/Zustand"
+            },
+            {
+              "name": "Virtual DOM",
+              "details": "Reconciliation algorithm, diffing, keys and why they matter"
+            },
+            {
+              "name": "Custom Hooks",
+              "details": "Building reusable logic (useFetch, useLocalStorage, useDebounce)"
+            }
+          ],
+          "practice": "Build 3 custom hooks, explain re-render optimization strategies",
+          "completed": false
+        },
+        {
+          "day": 5,
+          "title": "Next.js & Advanced React",
+          "topics": [
+            {
+              "name": "Next.js Routing",
+              "details": "App Router vs Pages Router, dynamic routes, layouts, loading/error"
+            },
+            {
+              "name": "Rendering Strategies",
+              "details": "SSR, SSG, ISR, CSR — when to use each, trade-offs"
+            },
+            {
+              "name": "Data Fetching",
+              "details": "Server Components, use(), fetch caching, revalidation"
+            },
+            {
+              "name": "Performance",
+              "details": "Code splitting, lazy loading, Image/Font optimization, bundle analysis"
+            },
+            {
+              "name": "Middleware & API Routes",
+              "details": "Authentication, redirects, API handlers"
+            }
+          ],
+          "practice": "Explain BrokerStudio's architecture choices using Next.js concepts",
+          "completed": false
+        },
+        {
+          "day": 6,
+          "title": "CSS, Responsive Design & Frontend Testing",
+          "topics": [
+            {
+              "name": "CSS Deep Dive",
+              "details": "Flexbox, Grid, specificity rules, BEM methodology"
+            },
+            {
+              "name": "Responsive Design",
+              "details": "Mobile-first, media queries, container queries, fluid typography"
+            },
+            {
+              "name": "CSS-in-JS & Tailwind",
+              "details": "Styled-components, CSS modules, Tailwind utility patterns"
+            },
+            {
+              "name": "Testing",
+              "details": "Jest, React Testing Library, component tests, integration tests"
+            },
+            {
+              "name": "Accessibility",
+              "details": "ARIA roles, semantic HTML, keyboard navigation, screen readers"
+            }
+          ],
+          "practice": "Write tests for a React component, build a responsive layout from scratch",
+          "completed": false
+        },
+        {
+          "day": 7,
+          "title": "Week 1 Review (Sunday)",
+          "topics": [
+            {
+              "name": "Review",
+              "details": "Revisit weak areas, create JS cheat sheet, self-quiz on React hooks and Next.js rendering"
+            }
+          ],
+          "practice": "Self-assessment quiz on all Week 1 topics",
+          "completed": false
+        }
+      ]
+    },
+    {
+      "week": 2,
+      "title": "Backend, Database & API Mastery",
+      "goal": "Master backend frameworks, database design, and API architecture to confidently handle backend interview questions.",
+      "total_hours": 24,
+      "days": [
+        {
+          "day": 8,
+          "title": "Node.js & Express.js Deep Dive",
+          "topics": [
+            {
+              "name": "Node.js Internals",
+              "details": "Event loop (libuv), single-threaded model, worker threads"
+            },
+            {
+              "name": "Express.js",
+              "details": "Middleware chain, routing, error handling middleware, request lifecycle"
+            },
+            {
+              "name": "Authentication",
+              "details": "JWT (access + refresh tokens), session-based, OAuth 2.0 flow"
+            },
+            {
+              "name": "Security",
+              "details": "Helmet, CORS, rate limiting, input validation, SQL/NoSQL injection prevention"
+            },
+            {
+              "name": "File Handling",
+              "details": "Multer, streams, buffer handling"
+            }
+          ],
+          "practice": "Build a secure REST API with JWT auth and rate limiting from scratch",
+          "completed": false
+        },
+        {
+          "day": 9,
+          "title": "Python & Django",
+          "topics": [
+            {
+              "name": "Django Architecture",
+              "details": "MVT pattern, ORM deep dive, QuerySets (lazy eval, Q objects)"
+            },
+            {
+              "name": "Django REST Framework",
+              "details": "Serializers, ViewSets, permissions, throttling, pagination"
+            },
+            {
+              "name": "Middleware",
+              "details": "Custom middleware, request/response processing order"
+            },
+            {
+              "name": "Django Admin",
+              "details": "Customization, ModelAdmin, custom actions"
+            },
+            {
+              "name": "Signals & Celery",
+              "details": "Async task processing, background jobs, scheduling"
+            }
+          ],
+          "practice": "Build a DRF API with custom permissions and pagination",
+          "completed": false
+        },
+        {
+          "day": 10,
+          "title": "SQL & Relational Databases",
+          "topics": [
+            {
+              "name": "SQL Fundamentals",
+              "details": "JOINs (INNER, LEFT, RIGHT, FULL, CROSS), subqueries, CTEs"
+            },
+            {
+              "name": "Indexing",
+              "details": "B-Tree, Hash, composite indexes, EXPLAIN ANALYZE, query optimization"
+            },
+            {
+              "name": "Database Design",
+              "details": "Normalization (1NF-3NF), denormalization trade-offs"
+            },
+            {
+              "name": "Transactions",
+              "details": "ACID properties, isolation levels, deadlocks, optimistic vs pessimistic locking"
+            },
+            {
+              "name": "Advanced SQL",
+              "details": "Window functions, stored procedures, triggers, views"
+            }
+          ],
+          "practice": "Solve 10 medium SQL problems on LeetCode/HackerRank",
+          "completed": false
+        },
+        {
+          "day": 11,
+          "title": "NoSQL & Database Comparison",
+          "topics": [
+            {
+              "name": "MongoDB",
+              "details": "Document model, aggregation pipeline, indexing, schema design patterns"
+            },
+            {
+              "name": "Redis",
+              "details": "Data structures, caching strategies (write-through, write-back, TTL), pub/sub"
+            },
+            {
+              "name": "SQL vs NoSQL",
+              "details": "When to use each, CAP theorem, eventual vs strong consistency"
+            },
+            {
+              "name": "Database Scaling",
+              "details": "Vertical vs horizontal, sharding, replication, read replicas"
+            },
+            {
+              "name": "ORMs",
+              "details": "Sequelize, Prisma, Django ORM — N+1 problem, eager vs lazy loading"
+            }
+          ],
+          "practice": "Design a database schema for a ticketing system",
+          "completed": false
+        },
+        {
+          "day": 12,
+          "title": "REST API Design & GraphQL",
+          "topics": [
+            {
+              "name": "REST Best Practices",
+              "details": "Resource naming, versioning, HATEOAS, pagination, filtering"
+            },
+            {
+              "name": "HTTP Deep Dive",
+              "details": "Status codes, methods (idempotency), headers, content negotiation"
+            },
+            {
+              "name": "API Security",
+              "details": "API keys, OAuth 2.0, rate limiting, CORS, input sanitization"
+            },
+            {
+              "name": "GraphQL Basics",
+              "details": "Queries, mutations, subscriptions, resolvers, schema design"
+            },
+            {
+              "name": "API Documentation",
+              "details": "Swagger/OpenAPI, Postman collections"
+            }
+          ],
+          "practice": "Design a RESTful API for a stock trading platform (like BrokerStudio)",
+          "completed": false
+        },
+        {
+          "day": 13,
+          "title": "Microservices, Message Queues & Integration Patterns",
+          "topics": [
+            {
+              "name": "Microservices",
+              "details": "Monolith vs microservices, service boundaries, API gateway"
+            },
+            {
+              "name": "Message Queues",
+              "details": "RabbitMQ, Kafka basics, event-driven architecture"
+            },
+            {
+              "name": "WebSockets",
+              "details": "Real-time communication, Socket.io, SSE (Server-Sent Events)"
+            },
+            {
+              "name": "Third-Party APIs",
+              "details": "Integration patterns, retry logic, circuit breaker pattern"
+            },
+            {
+              "name": "Webhooks",
+              "details": "Design, security (HMAC verification), idempotency"
+            }
+          ],
+          "practice": "Explain how you'd build real-time stock price updates (Alpha Vantage experience)",
+          "completed": false
+        },
+        {
+          "day": 14,
+          "title": "Week 2 Review (Sunday)",
+          "topics": [
+            {
+              "name": "Review",
+              "details": "Build a mini full-stack CRUD app (Node+React or Django+React) in 2 hours. Review SQL queries and API design patterns."
+            }
+          ],
+          "practice": "Full-stack mini project + self-assessment",
+          "completed": false
+        }
+      ]
+    },
+    {
+      "week": 3,
+      "title": "DSA, System Design & DevOps",
+      "goal": "Build problem-solving skills for coding rounds, learn system design fundamentals, and strengthen DevOps knowledge.",
+      "total_hours": 24,
+      "days": [
+        {
+          "day": 15,
+          "title": "Arrays, Strings & Hash Maps",
+          "topics": [
+            {
+              "name": "Patterns",
+              "details": "Two Pointers, Sliding Window, Prefix Sum, Frequency Counter"
+            },
+            {
+              "name": "Key Problems",
+              "details": "Two Sum, Valid Anagram, Longest Substring Without Repeating, Max Subarray"
+            },
+            {
+              "name": "String Manipulation",
+              "details": "Reverse, palindrome, pattern matching, string builder"
+            },
+            {
+              "name": "HashMap Techniques",
+              "details": "Counting, grouping, caching results"
+            }
+          ],
+          "practice": "Solve 8-10 LeetCode Easy/Medium (Arrays + Strings + HashMap)",
+          "completed": false
+        },
+        {
+          "day": 16,
+          "title": "Linked Lists, Stacks & Queues",
+          "topics": [
+            {
+              "name": "Linked Lists",
+              "details": "Reversal, cycle detection (Floyd's), merge two sorted, remove nth node"
+            },
+            {
+              "name": "Stacks",
+              "details": "Valid parentheses, min stack, evaluate expressions, monotonic stack"
+            },
+            {
+              "name": "Queues",
+              "details": "BFS implementation, circular queue, priority queue basics"
+            },
+            {
+              "name": "Implementation",
+              "details": "Build stack/queue from scratch in JavaScript"
+            }
+          ],
+          "practice": "Solve 6-8 LeetCode problems on these data structures",
+          "completed": false
+        },
+        {
+          "day": 17,
+          "title": "Trees & Graphs",
+          "topics": [
+            {
+              "name": "Binary Trees",
+              "details": "Traversals (in/pre/post/level order), height, diameter, LCA"
+            },
+            {
+              "name": "BST",
+              "details": "Search, insert, delete, validate BST, Kth smallest"
+            },
+            {
+              "name": "Graphs",
+              "details": "BFS, DFS, adjacency list/matrix, connected components, topological sort"
+            },
+            {
+              "name": "Common Patterns",
+              "details": "Tree recursion template, graph traversal template"
+            }
+          ],
+          "practice": "Solve 6-8 tree/graph problems on LeetCode",
+          "completed": false
+        },
+        {
+          "day": 18,
+          "title": "Sorting, Searching & Dynamic Programming Intro",
+          "topics": [
+            {
+              "name": "Sorting",
+              "details": "Merge sort, Quick sort, time/space complexity comparisons"
+            },
+            {
+              "name": "Binary Search",
+              "details": "Classic, rotated array, search in 2D matrix, bisect"
+            },
+            {
+              "name": "DP Fundamentals",
+              "details": "Memoization vs tabulation, identifying subproblems"
+            },
+            {
+              "name": "Classic DP",
+              "details": "Climbing stairs, coin change, longest common subsequence, 0/1 knapsack"
+            }
+          ],
+          "practice": "Solve 3 binary search + 4 DP problems on LeetCode",
+          "completed": false
+        },
+        {
+          "day": 19,
+          "title": "System Design Fundamentals",
+          "topics": [
+            {
+              "name": "Core Concepts",
+              "details": "Load balancing, caching (CDN, Redis), database sharding, replication"
+            },
+            {
+              "name": "Scalability",
+              "details": "Horizontal vs vertical, CAP theorem, consistent hashing"
+            },
+            {
+              "name": "Communication",
+              "details": "REST vs gRPC, sync vs async, message queues, event bus"
+            },
+            {
+              "name": "Design Template",
+              "details": "Requirements → Estimation → API → Data Model → High-Level → Deep Dive"
+            },
+            {
+              "name": "Practice Designs",
+              "details": "URL Shortener, Twitter Feed, Chat Application, Real-time Stock Dashboard"
+            }
+          ],
+          "practice": "Design a real-time stock dashboard (relate to BrokerStudio)",
+          "completed": false
+        },
+        {
+          "day": 20,
+          "title": "DevOps, Docker & CI/CD",
+          "topics": [
+            {
+              "name": "Docker",
+              "details": "Dockerfile, docker-compose, multi-stage builds, volumes, networking"
+            },
+            {
+              "name": "CI/CD",
+              "details": "GitHub Actions, pipelines, build → test → deploy workflow"
+            },
+            {
+              "name": "Cloud Services",
+              "details": "AWS (EC2, S3, RDS, Lambda), Azure/GCP equivalents"
+            },
+            {
+              "name": "DNS & Networking",
+              "details": "DNS resolution, SSL/TLS, Cloudflare, reverse proxy (Nginx)"
+            },
+            {
+              "name": "Monitoring",
+              "details": "Logging (ELK), monitoring (Prometheus/Grafana), error tracking (Sentry)"
+            }
+          ],
+          "practice": "Write a Dockerfile + docker-compose for a full-stack app, set up GitHub Actions",
+          "completed": false
+        },
+        {
+          "day": 21,
+          "title": "Week 3 Review (Sunday)",
+          "topics": [
+            {
+              "name": "Review",
+              "details": "Solve 5 random LeetCode mediums under time pressure. Practice explaining one system design problem out loud."
+            }
+          ],
+          "practice": "Timed problem solving + verbal system design walkthrough",
+          "completed": false
+        }
+      ]
+    },
+    {
+      "week": 4,
+      "title": "Mock Interviews & Final Polish",
+      "goal": "Simulate real interviews, polish project stories, nail behavioral questions, and build confidence.",
+      "total_hours": 24,
+      "days": [
+        {
+          "day": 22,
+          "title": "Project Deep Dives",
+          "topics": [
+            {
+              "name": "BrokerStudio / BrokerHub",
+              "details": "Architecture, tech choices, challenges, scale considerations"
+            },
+            {
+              "name": "Stock Comparison Widget",
+              "details": "API integration, rate limiting, caching strategy"
+            },
+            {
+              "name": "Ticketing System",
+              "details": "Data model, workflow design, real-time updates"
+            },
+            {
+              "name": "VitalHops",
+              "details": "DNS/SSL setup, Cloudflare integration, hosting decisions"
+            },
+            {
+              "name": "Storytelling Framework",
+              "details": "What → Why (tech choice) → Challenge → Solution → What I'd change"
+            }
+          ],
+          "practice": "Write a 2-minute pitch for each project, time yourself",
+          "completed": false
+        },
+        {
+          "day": 23,
+          "title": "Behavioral Interview Prep (STAR Method)",
+          "topics": [
+            {
+              "name": "Common Questions",
+              "details": "Tell me about yourself, Why this company, Greatest strength/weakness"
+            },
+            {
+              "name": "Technical Stories",
+              "details": "Hardest bug, architecture decision, performance optimization"
+            },
+            {
+              "name": "Collaboration",
+              "details": "Disagreement with team, mentoring, cross-functional work"
+            },
+            {
+              "name": "Growth",
+              "details": "How you stay updated, biggest learning, career goals"
+            },
+            {
+              "name": "STAR Format",
+              "details": "Situation → Task → Action → Result (with metrics if possible)"
+            }
+          ],
+          "practice": "Prepare 6-8 STAR stories covering different competencies",
+          "completed": false
+        },
+        {
+          "day": 24,
+          "title": "Full Mock Interview: Frontend Round",
+          "topics": [
+            {
+              "name": "JS Theory (15 min)",
+              "details": "Closures, event loop, promises"
+            },
+            {
+              "name": "Live Coding (20 min)",
+              "details": "Build a small React component with state management"
+            },
+            {
+              "name": "Architecture Discussion (10 min)",
+              "details": "React/Next.js architecture deep dive"
+            }
+          ],
+          "practice": "Use Pramp, Interviewing.io, or ask a friend to simulate",
+          "completed": false
+        },
+        {
+          "day": 25,
+          "title": "Full Mock Interview: Backend Round",
+          "topics": [
+            {
+              "name": "Backend Theory (15 min)",
+              "details": "Node.js/Django theory, REST API design"
+            },
+            {
+              "name": "Coding Challenge (20 min)",
+              "details": "SQL problem or API coding challenge"
+            },
+            {
+              "name": "DB Design Discussion (10 min)",
+              "details": "Database design and optimization discussion"
+            }
+          ],
+          "practice": "Practice writing SQL queries under time pressure",
+          "completed": false
+        },
+        {
+          "day": 26,
+          "title": "Full Mock Interview: System Design + DSA",
+          "topics": [
+            {
+              "name": "System Design (30 min)",
+              "details": "Design a real-time notification system or stock trading platform"
+            },
+            {
+              "name": "DSA Round (30 min)",
+              "details": "Solve 2 LeetCode mediums under time pressure"
+            },
+            {
+              "name": "Communication",
+              "details": "Practice thinking out loud and articulating your approach"
+            }
+          ],
+          "practice": "Articulation is as important as the solution itself",
+          "completed": false
+        },
+        {
+          "day": 27,
+          "title": "Final Review & Polish",
+          "topics": [
+            {
+              "name": "Review All Notes",
+              "details": "Revisit cheat sheets and notes from Weeks 1-3"
+            },
+            {
+              "name": "Re-solve Weak Areas",
+              "details": "Redo any problems you struggled with"
+            },
+            {
+              "name": "Elevator Pitch",
+              "details": "Finalize 'Tell me about yourself' (90 seconds)"
+            },
+            {
+              "name": "Interviewer Questions",
+              "details": "Prepare 5-7 thoughtful questions to ask interviewers"
+            },
+            {
+              "name": "Portfolio",
+              "details": "Organize portfolio (dynamicat.co) and GitHub repos"
+            }
+          ],
+          "practice": "Record yourself answering 3 behavioral questions, review for filler words",
+          "completed": false
+        },
+        {
+          "day": 28,
+          "title": "Week 4 Review — YOU'RE READY!",
+          "topics": [
+            {
+              "name": "Light Review",
+              "details": "Light review only. Rest well, eat well, sleep well. Confidence matters. You've put in the work!"
+            }
+          ],
+          "practice": "Relax, recharge, and trust the process",
+          "completed": false
+        }
+      ]
+    }
+  ],
+  "dsa_cheat_sheet": [
+    {
+      "pattern": "Two Pointers",
+      "when_to_use": "Sorted arrays, pair finding",
+      "key_problems": ["Two Sum II", "3Sum", "Container With Most Water"]
+    },
+    {
+      "pattern": "Sliding Window",
+      "when_to_use": "Subarray/substring problems",
+      "key_problems": ["Max Subarray", "Minimum Window Substring"]
+    },
+    {
+      "pattern": "HashMap",
+      "when_to_use": "Counting, grouping, lookup",
+      "key_problems": ["Two Sum", "Group Anagrams", "Top K Frequent"]
+    },
+    {
+      "pattern": "Binary Search",
+      "when_to_use": "Sorted data, optimization",
+      "key_problems": ["Search in Rotated Array", "Find Peak Element"]
+    },
+    {
+      "pattern": "BFS/DFS",
+      "when_to_use": "Trees, graphs, matrices",
+      "key_problems": ["Level Order Traversal", "Number of Islands"]
+    },
+    {
+      "pattern": "Dynamic Programming",
+      "when_to_use": "Optimal substructure + overlapping subproblems",
+      "key_problems": ["Coin Change", "LCS", "0/1 Knapsack"]
+    },
+    {
+      "pattern": "Stack",
+      "when_to_use": "Matching, monotonic patterns",
+      "key_problems": ["Valid Parentheses", "Daily Temperatures"]
+    },
+    {
+      "pattern": "Recursion/Backtracking",
+      "when_to_use": "Combinations, permutations",
+      "key_problems": ["Subsets", "N-Queens", "Word Search"]
+    }
+  ],
+  "resources": {
+    "dsa_practice": [
+      { "name": "LeetCode — NeetCode 150", "url": "https://neetcode.io", "type": "Practice" },
+      { "name": "HackerRank SQL", "url": "https://hackerrank.com/domains/sql", "type": "Practice" },
+      { "name": "Blind 75", "url": "https://leetcode.com/discuss/general-discussion/460599/blind-75-leetcode-questions", "type": "Practice" }
+    ],
+    "javascript_react": [
+      { "name": "javascript.info", "url": "https://javascript.info", "type": "Tutorial" },
+      { "name": "React.dev", "url": "https://react.dev", "type": "Documentation" },
+      { "name": "Next.js Docs", "url": "https://nextjs.org/docs", "type": "Documentation" },
+      { "name": "Namaste JavaScript (YouTube)", "url": "https://youtube.com/@AkshaySaini", "type": "Video" }
+    ],
+    "backend_system_design": [
+      { "name": "Django REST Framework Docs", "url": "https://django-rest-framework.org", "type": "Documentation" },
+      { "name": "System Design Primer (GitHub)", "url": "https://github.com/donnemartin/system-design-primer", "type": "Guide" },
+      { "name": "ByteByteGo (YouTube)", "url": "https://youtube.com/@ByteByteGo", "type": "Video" },
+      { "name": "Designing Data-Intensive Applications", "url": "https://dataintensive.net", "type": "Book" }
+    ],
+    "devops": [
+      { "name": "Docker Docs", "url": "https://docs.docker.com", "type": "Documentation" },
+      { "name": "GitHub Actions Docs", "url": "https://docs.github.com/en/actions", "type": "Documentation" }
+    ],
+    "mock_interviews": [
+      { "name": "Pramp", "url": "https://pramp.com", "type": "Platform" },
+      { "name": "Interviewing.io", "url": "https://interviewing.io", "type": "Platform" }
+    ]
+  }
+}
