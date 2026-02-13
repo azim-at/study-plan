@@ -22,23 +22,33 @@
           "topics": [
             {
               "name": "Execution Context & Call Stack",
-              "details": "How JS engine executes code, GEC vs FEC"
+              "details": "How JS engine executes code, GEC vs FEC",
+              "definition": "An execution context is the environment where JavaScript code runs. The Global Execution Context (GEC) is created first, and a new Function Execution Context (FEC) is pushed onto the call stack each time a function is called.",
+              "codeExample": "function greet() {\n  console.log(\"Hello\");\n}\nfunction main() {\n  greet();\n}\nmain(); // Call Stack: main() -> greet()"
             },
             {
               "name": "Hoisting",
-              "details": "Variable (var, let, const) and function hoisting, Temporal Dead Zone"
+              "details": "Variable (var, let, const) and function hoisting, Temporal Dead Zone",
+              "definition": "Hoisting is JavaScript's behavior of moving declarations to the top of their scope during compilation. var is hoisted and initialized as undefined, while let and const are hoisted but stay in a Temporal Dead Zone until their declaration line.",
+              "codeExample": "console.log(a); // undefined (var is hoisted)\nvar a = 10;\n\nconsole.log(b); // ReferenceError (TDZ)\nlet b = 20;\n\ngreet(); // Works! Function declarations are fully hoisted\nfunction greet() { console.log(\"Hi\"); }"
             },
             {
               "name": "Scope & Scope Chain",
-              "details": "Global, function, block scope; lexical scoping"
+              "details": "Global, function, block scope; lexical scoping",
+              "definition": "Scope determines where variables are accessible. JavaScript has global, function, and block scope. When a variable isn't found in the current scope, the engine looks up the scope chain to the outer (lexical) scope until it reaches the global scope.",
+              "codeExample": "const global = \"I'm global\";\nfunction outer() {\n  const outerVar = \"I'm outer\";\n  function inner() {\n    console.log(outerVar); // Found via scope chain\n    console.log(global);   // Found via scope chain\n  }\n  inner();\n}"
             },
             {
               "name": "Closures",
-              "details": "Definition, practical uses (data privacy, currying, memoization)"
+              "details": "Definition, practical uses (data privacy, currying, memoization)",
+              "definition": "A closure is a function that remembers the variables from its outer scope even after the outer function has finished executing. This lets you create private variables and build patterns like currying and memoization.",
+              "codeExample": "function counter() {\n  let count = 0; // private variable\n  return {\n    increment: () => ++count,\n    getCount: () => count\n  };\n}\nconst c = counter();\nc.increment(); // 1\nc.getCount();  // 1"
             },
             {
               "name": "this keyword",
-              "details": "Rules (default, implicit, explicit, new binding), arrow functions"
+              "details": "Rules (default, implicit, explicit, new binding), arrow functions",
+              "definition": "The 'this' keyword refers to the object that is executing the current function. Its value depends on how the function is called: default binding (global), implicit (object calling it), explicit (call/apply/bind), and new binding (constructor). Arrow functions inherit 'this' from their surrounding scope.",
+              "codeExample": "const obj = {\n  name: \"Azim\",\n  greet() { console.log(this.name); },       // \"Azim\" (implicit)\n  arrow: () => console.log(this.name)         // undefined (lexical this)\n};\nobj.greet();\nobj.greet.call({ name: \"Other\" });            // \"Other\" (explicit)"
             }
           ],
           "practice": "Write 5 closure examples, explain output of tricky 'this' snippets",
@@ -50,23 +60,33 @@
           "topics": [
             {
               "name": "Event Loop",
-              "details": "Call Stack, Web APIs, Callback Queue, Microtask Queue"
+              "details": "Call Stack, Web APIs, Callback Queue, Microtask Queue",
+              "definition": "The event loop is how JavaScript handles async operations despite being single-threaded. It continuously checks if the call stack is empty, then processes microtasks (Promises) first, followed by macrotasks (setTimeout, events) from the callback queue.",
+              "codeExample": "console.log(\"1\");\nsetTimeout(() => console.log(\"2\"), 0);\nPromise.resolve().then(() => console.log(\"3\"));\nconsole.log(\"4\");\n// Output: 1, 4, 3, 2\n// (sync first, then microtask, then macrotask)"
             },
             {
               "name": "Promises",
-              "details": "States, chaining, Promise.all, Promise.race, Promise.allSettled"
+              "details": "States, chaining, Promise.all, Promise.race, Promise.allSettled",
+              "definition": "A Promise is an object representing a future value. It has three states: pending, fulfilled, or rejected. You can chain .then() for success and .catch() for errors. Promise.all runs multiple promises in parallel and waits for all to finish.",
+              "codeExample": "const fetchUser = fetch(\"/api/user\").then(r => r.json());\nconst fetchPosts = fetch(\"/api/posts\").then(r => r.json());\n\nPromise.all([fetchUser, fetchPosts])\n  .then(([user, posts]) => console.log(user, posts))\n  .catch(err => console.error(err));"
             },
             {
               "name": "Async/Await",
-              "details": "Error handling with try/catch, parallel execution patterns"
+              "details": "Error handling with try/catch, parallel execution patterns",
+              "definition": "Async/await is syntactic sugar over Promises that makes asynchronous code look synchronous. An async function always returns a Promise, and await pauses execution until that Promise resolves. Use try/catch for error handling.",
+              "codeExample": "async function getData() {\n  try {\n    const [user, posts] = await Promise.all([\n      fetch(\"/api/user\").then(r => r.json()),\n      fetch(\"/api/posts\").then(r => r.json())\n    ]);\n    return { user, posts };\n  } catch (err) {\n    console.error(\"Failed:\", err);\n  }\n}"
             },
             {
               "name": "Callbacks vs Promises vs Async/Await",
-              "details": "Trade-offs, when to use each"
+              "details": "Trade-offs, when to use each",
+              "definition": "Callbacks are functions passed as arguments to handle async results but can lead to callback hell. Promises fix nesting with chaining. Async/await makes async code read like synchronous code, which is the cleanest approach for most use cases.",
+              "codeExample": "// Callback (nested)\ngetUser(id, (user) => {\n  getPosts(user.id, (posts) => { /* ... */ });\n});\n// Promise (chained)\ngetUser(id).then(u => getPosts(u.id)).then(p => console.log(p));\n// Async/Await (cleanest)\nconst user = await getUser(id);\nconst posts = await getPosts(user.id);"
             },
             {
               "name": "setTimeout/setInterval",
-              "details": "Debouncing, throttling implementations"
+              "details": "Debouncing, throttling implementations",
+              "definition": "setTimeout runs code after a delay, setInterval runs it repeatedly. Debouncing delays execution until the user stops triggering an event. Throttling limits execution to once per time interval. Both are essential for performance optimization.",
+              "codeExample": "function debounce(fn, delay) {\n  let timer;\n  return (...args) => {\n    clearTimeout(timer);\n    timer = setTimeout(() => fn(...args), delay);\n  };\n}\nconst search = debounce((query) => {\n  fetch(\"/api/search?q=\" + query);\n}, 300);"
             }
           ],
           "practice": "Implement Promise.all from scratch, debounce/throttle functions",
@@ -78,23 +98,33 @@
           "topics": [
             {
               "name": "Prototypal Inheritance",
-              "details": "Prototype chain, Object.create, __proto__ vs prototype"
+              "details": "Prototype chain, Object.create, __proto__ vs prototype",
+              "definition": "In JavaScript, objects can inherit properties from other objects through the prototype chain. Every object has a hidden __proto__ link to its prototype. When you access a property, JS looks up the chain until it finds it or reaches null.",
+              "codeExample": "const animal = { speak() { return \"...\" } };\nconst dog = Object.create(animal);\ndog.bark = () => \"Woof!\";\n\nconsole.log(dog.bark());  // \"Woof!\" (own property)\nconsole.log(dog.speak()); // \"...\" (inherited via prototype)"
             },
             {
               "name": "ES6+ Features",
-              "details": "Destructuring, spread/rest, Map/Set/WeakMap, generators, iterators"
+              "details": "Destructuring, spread/rest, Map/Set/WeakMap, generators, iterators",
+              "definition": "ES6+ introduced modern syntax like destructuring (extracting values from objects/arrays), spread/rest operators (...), and new data structures like Map and Set. These features make code shorter and more expressive.",
+              "codeExample": "const { name, age, ...rest } = { name: \"Azim\", age: 25, role: \"Dev\" };\nconst merged = [...[1, 2], ...[3, 4]]; // [1, 2, 3, 4]\n\nconst map = new Map();\nmap.set(\"key\", \"value\");\nconst unique = new Set([1, 2, 2, 3]); // Set {1, 2, 3}"
             },
             {
               "name": "Modules",
-              "details": "CommonJS vs ES Modules, import/export, dynamic imports"
+              "details": "CommonJS vs ES Modules, import/export, dynamic imports",
+              "definition": "Modules let you split code into separate files. CommonJS (require/module.exports) is used in Node.js, while ES Modules (import/export) is the modern standard for both browser and Node. Dynamic imports load modules on demand with import().",
+              "codeExample": "// ES Modules\nexport const add = (a, b) => a + b;\nexport default function greet() { return \"Hi\"; }\n\n// Importing\nimport greet, { add } from \"./math.js\";\n\n// Dynamic import (code splitting)\nconst module = await import(\"./heavy-module.js\");"
             },
             {
               "name": "Error Handling",
-              "details": "Custom errors, error boundaries, defensive programming"
+              "details": "Custom errors, error boundaries, defensive programming",
+              "definition": "Good error handling means catching errors gracefully instead of crashing. You can create custom error classes for specific error types. Defensive programming means validating inputs and handling edge cases before they cause problems.",
+              "codeExample": "class ValidationError extends Error {\n  constructor(field, message) {\n    super(message);\n    this.name = \"ValidationError\";\n    this.field = field;\n  }\n}\ntry {\n  throw new ValidationError(\"email\", \"Invalid email\");\n} catch (e) {\n  if (e instanceof ValidationError) console.log(e.field);\n}"
             },
             {
               "name": "Design Patterns",
-              "details": "Module, Singleton, Observer, Factory, Pub/Sub"
+              "details": "Module, Singleton, Observer, Factory, Pub/Sub",
+              "definition": "Design patterns are reusable solutions to common coding problems. The Observer pattern lets objects subscribe to events, the Singleton ensures only one instance exists, and the Factory pattern creates objects without specifying exact classes.",
+              "codeExample": "// Observer Pattern\nclass EventEmitter {\n  constructor() { this.events = {}; }\n  on(event, fn) {\n    (this.events[event] ||= []).push(fn);\n  }\n  emit(event, data) {\n    (this.events[event] || []).forEach(fn => fn(data));\n  }\n}"
             }
           ],
           "practice": "Implement Observer pattern, create a custom EventEmitter class",
@@ -106,23 +136,33 @@
           "topics": [
             {
               "name": "Component Lifecycle",
-              "details": "Mounting, updating, unmounting; functional vs class"
+              "details": "Mounting, updating, unmounting; functional vs class",
+              "definition": "React components go through lifecycle phases: mounting (added to DOM), updating (re-rendering on state/prop change), and unmounting (removed from DOM). In functional components, useEffect handles all three phases depending on its dependency array.",
+              "codeExample": "function UserProfile({ userId }) {\n  useEffect(() => {\n    console.log(\"Mounted or userId changed\");\n    fetchUser(userId);\n    return () => console.log(\"Cleanup / unmount\");\n  }, [userId]); // Runs on mount + when userId changes\n}"
             },
             {
               "name": "Hooks Deep Dive",
-              "details": "useState, useEffect, useRef, useMemo, useCallback, useReducer"
+              "details": "useState, useEffect, useRef, useMemo, useCallback, useReducer",
+              "definition": "Hooks are functions that let you use React features in functional components. useState manages state, useEffect handles side effects, useRef holds mutable values, useMemo/useCallback memoize values/functions to prevent unnecessary re-renders, and useReducer manages complex state logic.",
+              "codeExample": "const [count, setCount] = useState(0);\nconst ref = useRef(null); // persists across renders\nconst doubled = useMemo(() => count * 2, [count]);\nconst handleClick = useCallback(() => {\n  setCount(prev => prev + 1);\n}, []);"
             },
             {
               "name": "State Management",
-              "details": "Lifting state, Context API, when to use Redux/Zustand"
+              "details": "Lifting state, Context API, when to use Redux/Zustand",
+              "definition": "State management is about where your data lives and how components access it. Lift state up to the nearest common parent for sibling communication. Context API avoids prop drilling for global data like themes. Use Redux/Zustand when state logic is complex or shared across many components.",
+              "codeExample": "const ThemeContext = React.createContext(\"light\");\n\nfunction App() {\n  return (\n    <ThemeContext.Provider value=\"dark\">\n      <Navbar />\n    </ThemeContext.Provider>\n  );\n}\nfunction Navbar() {\n  const theme = useContext(ThemeContext); // \"dark\"\n}"
             },
             {
               "name": "Virtual DOM",
-              "details": "Reconciliation algorithm, diffing, keys and why they matter"
+              "details": "Reconciliation algorithm, diffing, keys and why they matter",
+              "definition": "The Virtual DOM is a lightweight JavaScript copy of the real DOM. When state changes, React creates a new virtual DOM tree, diffs it with the previous one, and only updates the changed parts in the real DOM. Keys help React identify which list items changed, were added, or removed.",
+              "codeExample": "// Keys help React track list items efficiently\nfunction TodoList({ todos }) {\n  return (\n    <ul>\n      {todos.map(todo => (\n        <li key={todo.id}>{todo.text}</li>\n      ))}\n    </ul>\n  );\n}\n// BAD: key={index} causes issues on reorder/delete"
             },
             {
               "name": "Custom Hooks",
-              "details": "Building reusable logic (useFetch, useLocalStorage, useDebounce)"
+              "details": "Building reusable logic (useFetch, useLocalStorage, useDebounce)",
+              "definition": "Custom hooks are functions starting with 'use' that extract and reuse stateful logic across components. They can call other hooks and return any value. This is the primary way to share logic between functional components.",
+              "codeExample": "function useFetch(url) {\n  const [data, setData] = useState(null);\n  const [loading, setLoading] = useState(true);\n  useEffect(() => {\n    fetch(url).then(r => r.json())\n      .then(setData).finally(() => setLoading(false));\n  }, [url]);\n  return { data, loading };\n}"
             }
           ],
           "practice": "Build 3 custom hooks, explain re-render optimization strategies",
@@ -134,23 +174,33 @@
           "topics": [
             {
               "name": "Next.js Routing",
-              "details": "App Router vs Pages Router, dynamic routes, layouts, loading/error"
+              "details": "App Router vs Pages Router, dynamic routes, layouts, loading/error",
+              "definition": "Next.js App Router uses a file-system based routing where folders define routes. It supports layouts (shared UI), loading.js (suspense fallbacks), error.js (error boundaries), and dynamic segments like [id] for parameterized routes.",
+              "codeExample": "// app/blog/[slug]/page.js\nexport default function BlogPost({ params }) {\n  return <h1>Post: {params.slug}</h1>;\n}\n\n// app/blog/layout.js\nexport default function Layout({ children }) {\n  return <div className=\"blog-layout\">{children}</div>;\n}"
             },
             {
               "name": "Rendering Strategies",
-              "details": "SSR, SSG, ISR, CSR — when to use each, trade-offs"
+              "details": "SSR, SSG, ISR, CSR — when to use each, trade-offs",
+              "definition": "SSR renders pages on each request (good for dynamic data). SSG generates pages at build time (fastest, good for static content). ISR revalidates static pages after a set time. CSR renders in the browser (good for highly interactive apps). Choose based on how often your data changes.",
+              "codeExample": "// SSG (Static) - built at build time\nexport async function generateStaticParams() {\n  return [{ slug: \"hello\" }, { slug: \"world\" }];\n}\n\n// ISR - revalidate every 60 seconds\nfetch(url, { next: { revalidate: 60 } });\n\n// SSR - fresh on every request\nfetch(url, { cache: \"no-store\" });"
             },
             {
               "name": "Data Fetching",
-              "details": "Server Components, use(), fetch caching, revalidation"
+              "details": "Server Components, use(), fetch caching, revalidation",
+              "definition": "In Next.js App Router, Server Components fetch data directly on the server without sending JavaScript to the client. fetch() is extended with caching and revalidation options. This means less client-side JS and faster page loads.",
+              "codeExample": "// Server Component - runs on server only\nexport default async function Users() {\n  const users = await fetch(\"https://api.example.com/users\", {\n    next: { revalidate: 3600 } // cache for 1 hour\n  }).then(r => r.json());\n  return <ul>{users.map(u => <li key={u.id}>{u.name}</li>)}</ul>;\n}"
             },
             {
               "name": "Performance",
-              "details": "Code splitting, lazy loading, Image/Font optimization, bundle analysis"
+              "details": "Code splitting, lazy loading, Image/Font optimization, bundle analysis",
+              "definition": "Next.js optimizes performance through automatic code splitting (only loading JS needed for each page), lazy loading components with dynamic(), the Image component (auto-resizing, WebP, lazy loading), and built-in font optimization to prevent layout shift.",
+              "codeExample": "import dynamic from \"next/dynamic\";\nimport Image from \"next/image\";\n\nconst HeavyChart = dynamic(() => import(\"./Chart\"), {\n  loading: () => <p>Loading chart...</p>\n});\n\n<Image src=\"/hero.jpg\" width={800} height={400}\n  alt=\"Hero\" priority placeholder=\"blur\" />"
             },
             {
               "name": "Middleware & API Routes",
-              "details": "Authentication, redirects, API handlers"
+              "details": "Authentication, redirects, API handlers",
+              "definition": "Next.js middleware runs before a request is completed, perfect for authentication checks, redirects, and header modifications. API routes let you build backend endpoints directly inside your Next.js app without a separate server.",
+              "codeExample": "// middleware.js (runs on every request)\nimport { NextResponse } from \"next/server\";\nexport function middleware(request) {\n  const token = request.cookies.get(\"token\");\n  if (!token) return NextResponse.redirect(new URL(\"/login\", request.url));\n  return NextResponse.next();\n}\nexport const config = { matcher: [\"/dashboard/:path*\"] };"
             }
           ],
           "practice": "Explain BrokerStudio's architecture choices using Next.js concepts",
@@ -162,23 +212,33 @@
           "topics": [
             {
               "name": "CSS Deep Dive",
-              "details": "Flexbox, Grid, specificity rules, BEM methodology"
+              "details": "Flexbox, Grid, specificity rules, BEM methodology",
+              "definition": "Flexbox is for one-dimensional layouts (row or column), Grid is for two-dimensional layouts (rows and columns). CSS specificity determines which styles win when rules conflict: inline > ID > class > element. BEM (Block__Element--Modifier) is a naming convention to keep CSS organized.",
+              "codeExample": ".container {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 1rem;\n}\n.card { display: flex; flex-direction: column; }\n/* BEM naming */\n.card__title--highlighted { color: blue; }"
             },
             {
               "name": "Responsive Design",
-              "details": "Mobile-first, media queries, container queries, fluid typography"
+              "details": "Mobile-first, media queries, container queries, fluid typography",
+              "definition": "Mobile-first means designing for small screens first, then adding complexity for larger ones with media queries. Container queries style elements based on their parent's size instead of the viewport. Fluid typography scales smoothly between breakpoints.",
+              "codeExample": "/* Mobile-first approach */\n.grid { display: flex; flex-direction: column; }\n\n@media (min-width: 768px) {\n  .grid { flex-direction: row; }\n}\n/* Fluid typography */\nh1 { font-size: clamp(1.5rem, 4vw, 3rem); }"
             },
             {
               "name": "CSS-in-JS & Tailwind",
-              "details": "Styled-components, CSS modules, Tailwind utility patterns"
+              "details": "Styled-components, CSS modules, Tailwind utility patterns",
+              "definition": "CSS-in-JS (styled-components) lets you write CSS inside JavaScript with scoped styles and dynamic theming. CSS Modules scope class names locally by default. Tailwind uses utility classes directly in HTML for rapid styling without writing custom CSS.",
+              "codeExample": "// Tailwind utility classes\n<div className=\"flex items-center gap-4 p-6 bg-white\n  rounded-lg shadow-md hover:shadow-xl transition-shadow\">\n  <h2 className=\"text-xl font-bold text-gray-800\">\n    {title}\n  </h2>\n</div>"
             },
             {
               "name": "Testing",
-              "details": "Jest, React Testing Library, component tests, integration tests"
+              "details": "Jest, React Testing Library, component tests, integration tests",
+              "definition": "Jest is a JavaScript testing framework for running tests and assertions. React Testing Library focuses on testing components the way users interact with them (clicking, typing) rather than testing implementation details. This leads to more reliable tests.",
+              "codeExample": "import { render, screen, fireEvent } from \"@testing-library/react\";\nimport Counter from \"./Counter\";\n\ntest(\"increments counter on click\", () => {\n  render(<Counter />);\n  fireEvent.click(screen.getByText(\"Increment\"));\n  expect(screen.getByText(\"Count: 1\")).toBeInTheDocument();\n});"
             },
             {
               "name": "Accessibility",
-              "details": "ARIA roles, semantic HTML, keyboard navigation, screen readers"
+              "details": "ARIA roles, semantic HTML, keyboard navigation, screen readers",
+              "definition": "Accessibility (a11y) means making websites usable for everyone, including people with disabilities. Use semantic HTML (nav, main, button) instead of divs for everything. ARIA roles and labels help screen readers understand your UI. Always ensure keyboard navigation works.",
+              "codeExample": "// Good: semantic HTML + ARIA\n<button aria-label=\"Close menu\" onClick={onClose}>\n  <span aria-hidden=\"true\">&times;</span>\n</button>\n\n<nav aria-label=\"Main navigation\">\n  <ul role=\"list\">\n    <li><a href=\"/home\">Home</a></li>\n  </ul>\n</nav>"
             }
           ],
           "practice": "Write tests for a React component, build a responsive layout from scratch",
@@ -190,7 +250,8 @@
           "topics": [
             {
               "name": "Review",
-              "details": "Revisit weak areas, create JS cheat sheet, self-quiz on React hooks and Next.js rendering"
+              "details": "Revisit weak areas, create JS cheat sheet, self-quiz on React hooks and Next.js rendering",
+              "definition": "Use this day to consolidate everything from Week 1. Revisit any topics you found difficult, create a cheat sheet covering JS fundamentals (closures, event loop, promises), React hooks, and Next.js rendering strategies. Quiz yourself to identify gaps."
             }
           ],
           "practice": "Self-assessment quiz on all Week 1 topics",
@@ -210,23 +271,33 @@
           "topics": [
             {
               "name": "Node.js Internals",
-              "details": "Event loop (libuv), single-threaded model, worker threads"
+              "details": "Event loop (libuv), single-threaded model, worker threads",
+              "definition": "Node.js runs JavaScript on the server using the V8 engine and libuv for async I/O. It is single-threaded but handles concurrency through the event loop. For CPU-intensive tasks, you can use Worker Threads to run code in parallel.",
+              "codeExample": "const { Worker } = require(\"worker_threads\");\n\n// Offload heavy computation to a worker\nconst worker = new Worker(\"./heavy-task.js\");\nworker.on(\"message\", (result) => {\n  console.log(\"Result from worker:\", result);\n});\nworker.postMessage({ data: [1, 2, 3] });"
             },
             {
               "name": "Express.js",
-              "details": "Middleware chain, routing, error handling middleware, request lifecycle"
+              "details": "Middleware chain, routing, error handling middleware, request lifecycle",
+              "definition": "Express.js is a minimal Node.js web framework. Middleware functions run in order and can modify req/res objects, end the request, or call next() to pass control. The request flows through middleware chain: logging -> auth -> route handler -> error handler.",
+              "codeExample": "const app = express();\napp.use(express.json()); // parse JSON body\napp.use(logger);        // custom middleware\n\napp.get(\"/api/users\", authMiddleware, (req, res) => {\n  res.json({ users: [] });\n});\n// Error handling middleware (4 args)\napp.use((err, req, res, next) => {\n  res.status(500).json({ error: err.message });\n});"
             },
             {
               "name": "Authentication",
-              "details": "JWT (access + refresh tokens), session-based, OAuth 2.0 flow"
+              "details": "JWT (access + refresh tokens), session-based, OAuth 2.0 flow",
+              "definition": "JWT authentication uses tokens (access + refresh) to verify users without server-side sessions. The access token is short-lived (15min) and the refresh token is long-lived (7 days) to get new access tokens. Session-based auth stores user data on the server. OAuth 2.0 lets users log in via Google/GitHub.",
+              "codeExample": "const jwt = require(\"jsonwebtoken\");\n\nfunction generateTokens(user) {\n  const access = jwt.sign({ id: user.id }, SECRET, { expiresIn: \"15m\" });\n  const refresh = jwt.sign({ id: user.id }, REFRESH_SECRET, { expiresIn: \"7d\" });\n  return { access, refresh };\n}"
             },
             {
               "name": "Security",
-              "details": "Helmet, CORS, rate limiting, input validation, SQL/NoSQL injection prevention"
+              "details": "Helmet, CORS, rate limiting, input validation, SQL/NoSQL injection prevention",
+              "definition": "Helmet sets secure HTTP headers. CORS controls which domains can access your API. Rate limiting prevents abuse by capping requests per IP. Always validate and sanitize user input to prevent SQL injection and XSS attacks.",
+              "codeExample": "const helmet = require(\"helmet\");\nconst rateLimit = require(\"express-rate-limit\");\nconst cors = require(\"cors\");\n\napp.use(helmet());\napp.use(cors({ origin: \"https://myapp.com\" }));\napp.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }));"
             },
             {
               "name": "File Handling",
-              "details": "Multer, streams, buffer handling"
+              "details": "Multer, streams, buffer handling",
+              "definition": "Multer is middleware for handling file uploads in Express. Streams let you process large files in chunks instead of loading everything into memory. This is important for handling images, CSVs, or any large file uploads efficiently.",
+              "codeExample": "const multer = require(\"multer\");\nconst upload = multer({ dest: \"uploads/\",\n  limits: { fileSize: 5 * 1024 * 1024 } // 5MB max\n});\n\napp.post(\"/upload\", upload.single(\"avatar\"), (req, res) => {\n  console.log(req.file); // { filename, path, size... }\n  res.json({ url: `/uploads/${req.file.filename}` });\n});"
             }
           ],
           "practice": "Build a secure REST API with JWT auth and rate limiting from scratch",
@@ -238,23 +309,33 @@
           "topics": [
             {
               "name": "Django Architecture",
-              "details": "MVT pattern, ORM deep dive, QuerySets (lazy eval, Q objects)"
+              "details": "MVT pattern, ORM deep dive, QuerySets (lazy eval, Q objects)",
+              "definition": "Django follows the MVT (Model-View-Template) pattern. Models define your database schema, Views handle business logic, and Templates render HTML. QuerySets are lazy -- they don't hit the database until you actually use the data. Q objects let you build complex queries.",
+              "codeExample": "from django.db.models import Q\n\n# QuerySets are lazy - no DB hit yet\nusers = User.objects.filter(\n    Q(age__gte=18) & Q(is_active=True)\n).select_related(\"profile\").order_by(\"-created\")\n\n# DB is hit only when you evaluate\nfor user in users:\n    print(user.profile.bio)"
             },
             {
               "name": "Django REST Framework",
-              "details": "Serializers, ViewSets, permissions, throttling, pagination"
+              "details": "Serializers, ViewSets, permissions, throttling, pagination",
+              "definition": "DRF makes building REST APIs in Django easy. Serializers convert model instances to JSON and validate input. ViewSets combine list/create/update/delete logic. Permissions control who can access endpoints, and throttling limits request rates.",
+              "codeExample": "from rest_framework import serializers, viewsets, permissions\n\nclass UserSerializer(serializers.ModelSerializer):\n    class Meta:\n        model = User\n        fields = [\"id\", \"name\", \"email\"]\n\nclass UserViewSet(viewsets.ModelViewSet):\n    queryset = User.objects.all()\n    serializer_class = UserSerializer\n    permission_classes = [permissions.IsAuthenticated]"
             },
             {
               "name": "Middleware",
-              "details": "Custom middleware, request/response processing order"
+              "details": "Custom middleware, request/response processing order",
+              "definition": "Django middleware is a layer that processes every request before it reaches the view and every response before it reaches the client. Middleware runs in order for requests (top to bottom) and in reverse for responses. Common uses include logging, auth, and CORS.",
+              "codeExample": "class RequestTimingMiddleware:\n    def __init__(self, get_response):\n        self.get_response = get_response\n\n    def __call__(self, request):\n        import time\n        start = time.time()\n        response = self.get_response(request)\n        duration = time.time() - start\n        response[\"X-Request-Duration\"] = str(duration)\n        return response"
             },
             {
               "name": "Django Admin",
-              "details": "Customization, ModelAdmin, custom actions"
+              "details": "Customization, ModelAdmin, custom actions",
+              "definition": "Django Admin gives you a free admin panel for managing your database. You can customize it with ModelAdmin to control which fields show up, add search/filter, and create custom actions like bulk-approving records. It saves a lot of time for internal tools.",
+              "codeExample": "from django.contrib import admin\n\n@admin.register(Product)\nclass ProductAdmin(admin.ModelAdmin):\n    list_display = [\"name\", \"price\", \"is_active\"]\n    list_filter = [\"is_active\", \"category\"]\n    search_fields = [\"name\"]\n    actions = [\"mark_active\"]\n\n    def mark_active(self, request, queryset):\n        queryset.update(is_active=True)"
             },
             {
               "name": "Signals & Celery",
-              "details": "Async task processing, background jobs, scheduling"
+              "details": "Async task processing, background jobs, scheduling",
+              "definition": "Django signals let you run code automatically when certain events happen (like after saving a model). Celery is a task queue for running background jobs (sending emails, processing images) without blocking the request. You can also schedule periodic tasks with Celery Beat.",
+              "codeExample": "from django.db.models.signals import post_save\nfrom django.dispatch import receiver\nfrom celery import shared_task\n\n@receiver(post_save, sender=User)\ndef on_user_created(sender, instance, created, **kwargs):\n    if created:\n        send_welcome_email.delay(instance.email)\n\n@shared_task\ndef send_welcome_email(email):\n    send_mail(\"Welcome!\", \"...\", \"noreply@app.com\", [email])"
             }
           ],
           "practice": "Build a DRF API with custom permissions and pagination",
@@ -266,23 +347,33 @@
           "topics": [
             {
               "name": "SQL Fundamentals",
-              "details": "JOINs (INNER, LEFT, RIGHT, FULL, CROSS), subqueries, CTEs"
+              "details": "JOINs (INNER, LEFT, RIGHT, FULL, CROSS), subqueries, CTEs",
+              "definition": "JOINs combine rows from multiple tables. INNER JOIN returns matching rows only, LEFT JOIN includes all rows from the left table. CTEs (Common Table Expressions) are named temporary result sets that make complex queries readable.",
+              "codeExample": "WITH active_users AS (\n  SELECT id, name FROM users WHERE is_active = true\n)\nSELECT u.name, COUNT(o.id) AS order_count\nFROM active_users u\nLEFT JOIN orders o ON u.id = o.user_id\nGROUP BY u.name\nHAVING COUNT(o.id) > 5;"
             },
             {
               "name": "Indexing",
-              "details": "B-Tree, Hash, composite indexes, EXPLAIN ANALYZE, query optimization"
+              "details": "B-Tree, Hash, composite indexes, EXPLAIN ANALYZE, query optimization",
+              "definition": "Indexes are data structures that speed up database lookups, like a book's index. B-Tree indexes work for range queries and sorting. Composite indexes cover multiple columns. Use EXPLAIN ANALYZE to see how the database executes your query and find bottlenecks.",
+              "codeExample": "-- Create composite index for common query pattern\nCREATE INDEX idx_orders_user_date\nON orders (user_id, created_at DESC);\n\n-- Check query execution plan\nEXPLAIN ANALYZE\nSELECT * FROM orders\nWHERE user_id = 42 AND created_at > '2024-01-01';"
             },
             {
               "name": "Database Design",
-              "details": "Normalization (1NF-3NF), denormalization trade-offs"
+              "details": "Normalization (1NF-3NF), denormalization trade-offs",
+              "definition": "Normalization organizes data to reduce redundancy. 1NF: no repeating groups. 2NF: no partial dependencies. 3NF: no transitive dependencies. Denormalization intentionally adds redundancy for read performance -- useful when you need faster queries at the cost of more storage.",
+              "codeExample": "-- Normalized (3NF): separate tables\nCREATE TABLE users (id SERIAL PRIMARY KEY, name TEXT);\nCREATE TABLE addresses (\n  id SERIAL PRIMARY KEY,\n  user_id INT REFERENCES users(id),\n  city TEXT, state TEXT\n);\n-- Denormalized: faster reads, redundant data\n-- ADD city column directly to users table"
             },
             {
               "name": "Transactions",
-              "details": "ACID properties, isolation levels, deadlocks, optimistic vs pessimistic locking"
+              "details": "ACID properties, isolation levels, deadlocks, optimistic vs pessimistic locking",
+              "definition": "Transactions group multiple operations into one atomic unit -- either all succeed or all fail. ACID stands for Atomicity, Consistency, Isolation, Durability. Isolation levels control how transactions see each other's changes. Locking prevents conflicting updates.",
+              "codeExample": "BEGIN TRANSACTION;\n\nUPDATE accounts SET balance = balance - 100\nWHERE id = 1;\n\nUPDATE accounts SET balance = balance + 100\nWHERE id = 2;\n\n-- Both succeed or both fail\nCOMMIT;\n-- Or ROLLBACK if something goes wrong;"
             },
             {
               "name": "Advanced SQL",
-              "details": "Window functions, stored procedures, triggers, views"
+              "details": "Window functions, stored procedures, triggers, views",
+              "definition": "Window functions perform calculations across a set of rows related to the current row without collapsing them (unlike GROUP BY). ROW_NUMBER, RANK, and running totals are common use cases. Views are saved queries, and triggers run automatically on data changes.",
+              "codeExample": "SELECT name, department, salary,\n  RANK() OVER (PARTITION BY department ORDER BY salary DESC) as dept_rank,\n  AVG(salary) OVER (PARTITION BY department) as dept_avg\nFROM employees\nWHERE dept_rank <= 3; -- Top 3 earners per department"
             }
           ],
           "practice": "Solve 10 medium SQL problems on LeetCode/HackerRank",
@@ -294,23 +385,33 @@
           "topics": [
             {
               "name": "MongoDB",
-              "details": "Document model, aggregation pipeline, indexing, schema design patterns"
+              "details": "Document model, aggregation pipeline, indexing, schema design patterns",
+              "definition": "MongoDB stores data as flexible JSON-like documents instead of rows and columns. The aggregation pipeline processes documents through stages (match, group, sort) for complex queries. Schema design focuses on embedding related data vs referencing it.",
+              "codeExample": "// MongoDB aggregation pipeline\ndb.orders.aggregate([\n  { $match: { status: \"completed\" } },\n  { $group: {\n    _id: \"$customerId\",\n    totalSpent: { $sum: \"$amount\" },\n    orderCount: { $sum: 1 }\n  }},\n  { $sort: { totalSpent: -1 } },\n  { $limit: 10 }\n]);"
             },
             {
               "name": "Redis",
-              "details": "Data structures, caching strategies (write-through, write-back, TTL), pub/sub"
+              "details": "Data structures, caching strategies (write-through, write-back, TTL), pub/sub",
+              "definition": "Redis is an in-memory key-value store used for caching, sessions, and real-time features. It supports strings, lists, sets, hashes, and sorted sets. TTL (Time-To-Live) automatically expires cached data. Pub/sub enables real-time messaging between services.",
+              "codeExample": "const redis = require(\"redis\");\nconst client = redis.createClient();\n\n// Cache with TTL (expires in 1 hour)\nawait client.setEx(\"user:42\", 3600, JSON.stringify(user));\n\n// Get from cache first, then DB\nconst cached = await client.get(\"user:42\");\nconst data = cached ? JSON.parse(cached) : await db.findUser(42);"
             },
             {
               "name": "SQL vs NoSQL",
-              "details": "When to use each, CAP theorem, eventual vs strong consistency"
+              "details": "When to use each, CAP theorem, eventual vs strong consistency",
+              "definition": "SQL databases are great for structured data with relationships and transactions (e-commerce, banking). NoSQL is better for flexible schemas, high write volume, and horizontal scaling (social media, real-time apps). CAP theorem says you can only guarantee 2 of 3: Consistency, Availability, Partition tolerance.",
+              "codeExample": "// SQL: structured, relational data\n// Perfect for: orders, users, financial records\nSELECT * FROM orders JOIN users ON orders.user_id = users.id;\n\n// NoSQL: flexible, nested documents\n// Perfect for: product catalogs, user profiles, logs\n{ user: \"Azim\", preferences: { theme: \"dark\" },\n  activity: [{ action: \"login\", ts: \"...\" }] }"
             },
             {
               "name": "Database Scaling",
-              "details": "Vertical vs horizontal, sharding, replication, read replicas"
+              "details": "Vertical vs horizontal, sharding, replication, read replicas",
+              "definition": "Vertical scaling means adding more power (CPU/RAM) to one server. Horizontal scaling means adding more servers. Sharding splits data across multiple databases by a key. Replication copies data to read replicas so reads don't slow down the primary database.",
+              "codeExample": "// Sharding example: split users by region\n// Shard 1: users where region = 'US'\n// Shard 2: users where region = 'EU'\n// Shard 3: users where region = 'ASIA'\n\n// Read replica pattern (pseudo-code)\nconst primary = connectDB(\"primary-host\"); // writes\nconst replica = connectDB(\"replica-host\"); // reads\nawait primary.insert(newUser);\nconst users = await replica.query(\"SELECT * FROM users\");"
             },
             {
               "name": "ORMs",
-              "details": "Sequelize, Prisma, Django ORM — N+1 problem, eager vs lazy loading"
+              "details": "Sequelize, Prisma, Django ORM — N+1 problem, eager vs lazy loading",
+              "definition": "ORMs let you interact with databases using your programming language instead of raw SQL. The N+1 problem happens when you run 1 query to get a list, then N extra queries to get related data for each item. Fix it with eager loading (fetching related data in one query).",
+              "codeExample": "// Prisma ORM - eager loading to avoid N+1\nconst users = await prisma.user.findMany({\n  include: { posts: true } // JOIN in one query\n});\n\n// BAD (N+1): 1 query for users + N queries for posts\nconst users = await prisma.user.findMany();\nfor (const user of users) {\n  user.posts = await prisma.post.findMany({ where: { userId: user.id } });\n}"
             }
           ],
           "practice": "Design a database schema for a ticketing system",
@@ -322,23 +423,33 @@
           "topics": [
             {
               "name": "REST Best Practices",
-              "details": "Resource naming, versioning, HATEOAS, pagination, filtering"
+              "details": "Resource naming, versioning, HATEOAS, pagination, filtering",
+              "definition": "REST APIs should use nouns for resource URLs (not verbs), support versioning (v1/v2), and provide pagination for large datasets. Use consistent naming like /api/v1/users/:id. HATEOAS means including links in responses so clients can discover related actions.",
+              "codeExample": "// Good REST endpoint design\nGET    /api/v1/users          // list (with ?page=1&limit=20)\nGET    /api/v1/users/:id      // single resource\nPOST   /api/v1/users          // create\nPUT    /api/v1/users/:id      // full update\nPATCH  /api/v1/users/:id      // partial update\nDELETE /api/v1/users/:id      // delete"
             },
             {
               "name": "HTTP Deep Dive",
-              "details": "Status codes, methods (idempotency), headers, content negotiation"
+              "details": "Status codes, methods (idempotency), headers, content negotiation",
+              "definition": "HTTP methods have specific meanings: GET (read), POST (create), PUT (replace), PATCH (partial update), DELETE (remove). Idempotent means calling it multiple times gives the same result (GET, PUT, DELETE are idempotent; POST is not). Status codes tell the client what happened (200 OK, 201 Created, 404 Not Found, 500 Server Error).",
+              "codeExample": "// Common status codes to remember\n// 200 OK - Success\n// 201 Created - Resource created (POST)\n// 204 No Content - Success, no body (DELETE)\n// 400 Bad Request - Invalid input\n// 401 Unauthorized - Not authenticated\n// 403 Forbidden - Authenticated but not allowed\n// 404 Not Found\n// 429 Too Many Requests - Rate limited\n// 500 Internal Server Error"
             },
             {
               "name": "API Security",
-              "details": "API keys, OAuth 2.0, rate limiting, CORS, input sanitization"
+              "details": "API keys, OAuth 2.0, rate limiting, CORS, input sanitization",
+              "definition": "API security involves multiple layers: API keys identify the client, OAuth 2.0 handles user authorization, rate limiting prevents abuse, CORS controls which domains can call your API, and input sanitization prevents injection attacks. Always validate and sanitize all user input.",
+              "codeExample": "// Express API security setup\napp.use(cors({ origin: [\"https://myapp.com\"] }));\napp.use(rateLimit({ windowMs: 15 * 60000, max: 100 }));\n\n// Validate input with Joi/Zod\nconst schema = z.object({\n  email: z.string().email(),\n  name: z.string().min(2).max(50)\n});\nconst validated = schema.parse(req.body);"
             },
             {
               "name": "GraphQL Basics",
-              "details": "Queries, mutations, subscriptions, resolvers, schema design"
+              "details": "Queries, mutations, subscriptions, resolvers, schema design",
+              "definition": "GraphQL lets clients request exactly the data they need in a single request (no over-fetching or under-fetching). Queries read data, mutations change data, and subscriptions get real-time updates. Resolvers are functions that fetch the data for each field in your schema.",
+              "codeExample": "// GraphQL schema\ntype User {\n  id: ID!\n  name: String!\n  posts: [Post!]!\n}\ntype Query {\n  user(id: ID!): User\n}\n\n// Client query - get only what you need\nquery {\n  user(id: \"42\") {\n    name\n    posts { title }\n  }\n}"
             },
             {
               "name": "API Documentation",
-              "details": "Swagger/OpenAPI, Postman collections"
+              "details": "Swagger/OpenAPI, Postman collections",
+              "definition": "Good API documentation makes your API easy to understand and integrate. Swagger/OpenAPI is a standard format for describing REST APIs with endpoints, parameters, and response schemas. Postman collections let you share runnable API examples with your team.",
+              "codeExample": "// OpenAPI/Swagger YAML example\npaths:\n  /api/users:\n    get:\n      summary: \"List all users\"\n      parameters:\n        - name: page\n          in: query\n          schema: { type: integer, default: 1 }\n      responses:\n        200:\n          description: \"Success\"\n          content:\n            application/json:\n              schema: { type: array, items: { $ref: \"#/components/schemas/User\" } }"
             }
           ],
           "practice": "Design a RESTful API for a stock trading platform (like BrokerStudio)",
@@ -350,23 +461,33 @@
           "topics": [
             {
               "name": "Microservices",
-              "details": "Monolith vs microservices, service boundaries, API gateway"
+              "details": "Monolith vs microservices, service boundaries, API gateway",
+              "definition": "Microservices split a large app into small, independent services that communicate over APIs. Each service owns its data and can be deployed separately. An API gateway acts as a single entry point that routes requests to the right service. Monoliths are simpler but harder to scale individual parts.",
+              "codeExample": "// API Gateway routing example (Express)\nconst proxy = require(\"http-proxy-middleware\");\n\napp.use(\"/api/users\", proxy({ target: \"http://user-service:3001\" }));\napp.use(\"/api/orders\", proxy({ target: \"http://order-service:3002\" }));\napp.use(\"/api/payments\", proxy({ target: \"http://payment-service:3003\" }));"
             },
             {
               "name": "Message Queues",
-              "details": "RabbitMQ, Kafka basics, event-driven architecture"
+              "details": "RabbitMQ, Kafka basics, event-driven architecture",
+              "definition": "Message queues decouple services by letting them communicate asynchronously. A producer sends messages to the queue, and a consumer processes them later. RabbitMQ is great for task queues, while Kafka handles high-throughput event streaming. This prevents one slow service from blocking others.",
+              "codeExample": "// RabbitMQ with amqplib (Node.js)\nconst amqp = require(\"amqplib\");\n\n// Producer\nconst channel = await connection.createChannel();\nawait channel.assertQueue(\"email-queue\");\nchannel.sendToQueue(\"email-queue\", Buffer.from(JSON.stringify({\n  to: \"user@email.com\", subject: \"Welcome!\"\n})));"
             },
             {
               "name": "WebSockets",
-              "details": "Real-time communication, Socket.io, SSE (Server-Sent Events)"
+              "details": "Real-time communication, Socket.io, SSE (Server-Sent Events)",
+              "definition": "WebSockets create a persistent two-way connection between client and server for real-time communication (chat, live updates, stock prices). Socket.io adds fallbacks and rooms. SSE (Server-Sent Events) is simpler and one-way (server to client only), good for notifications.",
+              "codeExample": "// Socket.io server\nconst io = require(\"socket.io\")(server);\n\nio.on(\"connection\", (socket) => {\n  socket.join(\"stock-AAPL\"); // join a room\n  socket.on(\"subscribe\", (ticker) => {\n    socket.join(`stock-${ticker}`);\n  });\n});\n// Broadcast price update to room\nio.to(\"stock-AAPL\").emit(\"price\", { price: 185.50 });"
             },
             {
               "name": "Third-Party APIs",
-              "details": "Integration patterns, retry logic, circuit breaker pattern"
+              "details": "Integration patterns, retry logic, circuit breaker pattern",
+              "definition": "When integrating with external APIs, always add retry logic for transient failures, timeouts to avoid hanging, and circuit breakers to stop calling a failing service. The circuit breaker opens after repeated failures and tries again after a cooldown period.",
+              "codeExample": "// Retry with exponential backoff\nasync function fetchWithRetry(url, retries = 3) {\n  for (let i = 0; i < retries; i++) {\n    try {\n      return await fetch(url);\n    } catch (err) {\n      if (i === retries - 1) throw err;\n      await new Promise(r => setTimeout(r, 1000 * Math.pow(2, i)));\n    }\n  }\n}"
             },
             {
               "name": "Webhooks",
-              "details": "Design, security (HMAC verification), idempotency"
+              "details": "Design, security (HMAC verification), idempotency",
+              "definition": "Webhooks are HTTP callbacks that notify your app when an event happens in a third-party service (like a payment completing). Always verify webhook signatures using HMAC to ensure they're authentic. Make handlers idempotent so processing the same webhook twice doesn't cause duplicate actions.",
+              "codeExample": "// Verify webhook signature (HMAC)\nconst crypto = require(\"crypto\");\n\nfunction verifyWebhook(payload, signature, secret) {\n  const expected = crypto\n    .createHmac(\"sha256\", secret)\n    .update(payload)\n    .digest(\"hex\");\n  return crypto.timingSafeEqual(\n    Buffer.from(signature), Buffer.from(expected)\n  );\n}"
             }
           ],
           "practice": "Explain how you'd build real-time stock price updates (Alpha Vantage experience)",
@@ -378,7 +499,8 @@
           "topics": [
             {
               "name": "Review",
-              "details": "Build a mini full-stack CRUD app (Node+React or Django+React) in 2 hours. Review SQL queries and API design patterns."
+              "details": "Build a mini full-stack CRUD app (Node+React or Django+React) in 2 hours. Review SQL queries and API design patterns.",
+              "definition": "Use this review day to apply everything from Week 2. Build a small full-stack CRUD app with proper REST API design, database schema, authentication, and a React frontend. Time yourself to simulate interview pressure. Review your SQL query skills and API design patterns."
             }
           ],
           "practice": "Full-stack mini project + self-assessment",
@@ -398,19 +520,27 @@
           "topics": [
             {
               "name": "Patterns",
-              "details": "Two Pointers, Sliding Window, Prefix Sum, Frequency Counter"
+              "details": "Two Pointers, Sliding Window, Prefix Sum, Frequency Counter",
+              "definition": "These are common algorithmic techniques for solving array problems efficiently. Two Pointers uses two indices moving toward each other, Sliding Window tracks a range that slides across the array, Prefix Sum precomputes cumulative sums, and Frequency Counter uses a hash map to count occurrences.",
+              "codeExample": "// Two Pointers: find pair with target sum in sorted array\nfunction twoSum(arr, target) {\n  let left = 0, right = arr.length - 1;\n  while (left < right) {\n    const sum = arr[left] + arr[right];\n    if (sum === target) return [left, right];\n    sum < target ? left++ : right--;\n  }\n  return [];\n}"
             },
             {
               "name": "Key Problems",
-              "details": "Two Sum, Valid Anagram, Longest Substring Without Repeating, Max Subarray"
+              "details": "Two Sum, Valid Anagram, Longest Substring Without Repeating, Max Subarray",
+              "definition": "These are the most frequently asked array and string problems in interviews. Two Sum finds two numbers that add to a target, Valid Anagram checks if two strings have the same characters, Longest Substring finds the longest substring with all unique characters, and Max Subarray finds the contiguous subarray with the largest sum.",
+              "codeExample": "// Two Sum using HashMap - O(n)\nfunction twoSum(nums, target) {\n  const map = new Map();\n  for (let i = 0; i < nums.length; i++) {\n    const complement = target - nums[i];\n    if (map.has(complement)) return [map.get(complement), i];\n    map.set(nums[i], i);\n  }\n}"
             },
             {
               "name": "String Manipulation",
-              "details": "Reverse, palindrome, pattern matching, string builder"
+              "details": "Reverse, palindrome, pattern matching, string builder",
+              "definition": "String manipulation involves transforming and analyzing text data. Reversing flips character order, palindrome checks if a string reads the same forwards and backwards, pattern matching finds substrings, and string builder efficiently concatenates many strings.",
+              "codeExample": "// Check if a string is a palindrome\nfunction isPalindrome(str) {\n  const clean = str.toLowerCase().replace(/[^a-z0-9]/g, '');\n  let left = 0, right = clean.length - 1;\n  while (left < right) {\n    if (clean[left] !== clean[right]) return false;\n    left++; right--;\n  }\n  return true;\n}"
             },
             {
               "name": "HashMap Techniques",
-              "details": "Counting, grouping, caching results"
+              "details": "Counting, grouping, caching results",
+              "definition": "HashMaps (JavaScript objects or Map) let you store key-value pairs with O(1) lookup. Use them for counting how often items appear, grouping items by a shared property, or caching expensive computations so you don't repeat them.",
+              "codeExample": "// Frequency counter: find first non-repeating character\nfunction firstUnique(str) {\n  const freq = {};\n  for (const ch of str) freq[ch] = (freq[ch] || 0) + 1;\n  for (const ch of str) {\n    if (freq[ch] === 1) return ch;\n  }\n  return null;\n}"
             }
           ],
           "practice": "Solve 8-10 LeetCode Easy/Medium (Arrays + Strings + HashMap)",
@@ -422,19 +552,27 @@
           "topics": [
             {
               "name": "Linked Lists",
-              "details": "Reversal, cycle detection (Floyd's), merge two sorted, remove nth node"
+              "details": "Reversal, cycle detection (Floyd's), merge two sorted, remove nth node",
+              "definition": "A linked list is a linear data structure where each node points to the next one. Unlike arrays, elements are not stored contiguously in memory. Common operations include reversing the list, detecting cycles using Floyd's slow/fast pointer technique, and merging two sorted lists.",
+              "codeExample": "// Reverse a linked list\nfunction reverseList(head) {\n  let prev = null, curr = head;\n  while (curr) {\n    const next = curr.next;\n    curr.next = prev;\n    prev = curr;\n    curr = next;\n  }\n  return prev;\n}"
             },
             {
               "name": "Stacks",
-              "details": "Valid parentheses, min stack, evaluate expressions, monotonic stack"
+              "details": "Valid parentheses, min stack, evaluate expressions, monotonic stack",
+              "definition": "A stack is a Last-In-First-Out (LIFO) data structure where you push items on top and pop them off the top. It is great for matching brackets, tracking minimums, evaluating math expressions, and finding next greater/smaller elements with a monotonic stack.",
+              "codeExample": "// Valid Parentheses\nfunction isValid(s) {\n  const stack = [];\n  const map = { ')': '(', '}': '{', ']': '[' };\n  for (const ch of s) {\n    if (map[ch]) {\n      if (stack.pop() !== map[ch]) return false;\n    } else stack.push(ch);\n  }\n  return stack.length === 0;\n}"
             },
             {
               "name": "Queues",
-              "details": "BFS implementation, circular queue, priority queue basics"
+              "details": "BFS implementation, circular queue, priority queue basics",
+              "definition": "A queue is a First-In-First-Out (FIFO) data structure where you add to the back and remove from the front. Queues are essential for BFS traversal in trees and graphs. A priority queue always dequeues the highest-priority element first.",
+              "codeExample": "// BFS using a queue\nfunction bfs(graph, start) {\n  const queue = [start];\n  const visited = new Set([start]);\n  while (queue.length) {\n    const node = queue.shift();\n    for (const neighbor of graph[node]) {\n      if (!visited.has(neighbor)) {\n        visited.add(neighbor);\n        queue.push(neighbor);\n      }\n    }\n  }\n}"
             },
             {
               "name": "Implementation",
-              "details": "Build stack/queue from scratch in JavaScript"
+              "details": "Build stack/queue from scratch in JavaScript",
+              "definition": "Building data structures from scratch helps you understand how they work under the hood. A stack can be built with an array using push/pop, while a queue can use an object with head/tail indices to avoid the O(n) cost of array shift.",
+              "codeExample": "// Simple Queue implementation\nclass Queue {\n  constructor() { this.items = {}; this.head = 0; this.tail = 0; }\n  enqueue(val) { this.items[this.tail++] = val; }\n  dequeue() { const val = this.items[this.head]; delete this.items[this.head++]; return val; }\n  get size() { return this.tail - this.head; }\n}"
             }
           ],
           "practice": "Solve 6-8 LeetCode problems on these data structures",
@@ -446,19 +584,27 @@
           "topics": [
             {
               "name": "Binary Trees",
-              "details": "Traversals (in/pre/post/level order), height, diameter, LCA"
+              "details": "Traversals (in/pre/post/level order), height, diameter, LCA",
+              "definition": "A binary tree is a data structure where each node has at most two children (left and right). Traversals visit nodes in different orders: inorder (left-root-right), preorder (root-left-right), postorder (left-right-root), and level order (row by row using BFS).",
+              "codeExample": "// Inorder traversal (recursive)\nfunction inorder(root, result = []) {\n  if (!root) return result;\n  inorder(root.left, result);\n  result.push(root.val);\n  inorder(root.right, result);\n  return result;\n}"
             },
             {
               "name": "BST",
-              "details": "Search, insert, delete, validate BST, Kth smallest"
+              "details": "Search, insert, delete, validate BST, Kth smallest",
+              "definition": "A Binary Search Tree (BST) is a binary tree where the left child is always smaller and the right child is always larger than the parent. This property allows O(log n) search, insert, and delete operations on average.",
+              "codeExample": "// Search in a BST\nfunction searchBST(root, target) {\n  if (!root) return null;\n  if (target === root.val) return root;\n  return target < root.val\n    ? searchBST(root.left, target)\n    : searchBST(root.right, target);\n}"
             },
             {
               "name": "Graphs",
-              "details": "BFS, DFS, adjacency list/matrix, connected components, topological sort"
+              "details": "BFS, DFS, adjacency list/matrix, connected components, topological sort",
+              "definition": "A graph is a collection of nodes (vertices) connected by edges. Graphs can be directed or undirected. They are represented using adjacency lists (array of neighbors) or adjacency matrices. BFS and DFS are the two main ways to traverse a graph.",
+              "codeExample": "// DFS on adjacency list\nfunction dfs(graph, node, visited = new Set()) {\n  if (visited.has(node)) return;\n  visited.add(node);\n  console.log(node);\n  for (const neighbor of graph[node]) {\n    dfs(graph, neighbor, visited);\n  }\n}"
             },
             {
               "name": "Common Patterns",
-              "details": "Tree recursion template, graph traversal template"
+              "details": "Tree recursion template, graph traversal template",
+              "definition": "Most tree problems follow a recursive pattern: handle the base case (null node), process left and right subtrees, then combine results. Graph problems typically start with building an adjacency list, then use BFS or DFS with a visited set to avoid cycles.",
+              "codeExample": "// Tree recursion template\nfunction solve(root) {\n  if (!root) return baseCase;\n  const left = solve(root.left);\n  const right = solve(root.right);\n  return combine(left, right, root.val);\n}"
             }
           ],
           "practice": "Solve 6-8 tree/graph problems on LeetCode",
@@ -470,19 +616,27 @@
           "topics": [
             {
               "name": "Sorting",
-              "details": "Merge sort, Quick sort, time/space complexity comparisons"
+              "details": "Merge sort, Quick sort, time/space complexity comparisons",
+              "definition": "Sorting arranges elements in order. Merge Sort divides the array in half, sorts each half, then merges them (O(n log n) always). Quick Sort picks a pivot, partitions around it, and recurses (O(n log n) average, O(n^2) worst). Merge Sort is stable; Quick Sort is in-place.",
+              "codeExample": "// Merge Sort\nfunction mergeSort(arr) {\n  if (arr.length <= 1) return arr;\n  const mid = Math.floor(arr.length / 2);\n  const left = mergeSort(arr.slice(0, mid));\n  const right = mergeSort(arr.slice(mid));\n  return merge(left, right);\n}"
             },
             {
               "name": "Binary Search",
-              "details": "Classic, rotated array, search in 2D matrix, bisect"
+              "details": "Classic, rotated array, search in 2D matrix, bisect",
+              "definition": "Binary Search finds a target in a sorted array by repeatedly cutting the search space in half. Compare the target to the middle element: if smaller, search the left half; if larger, search the right half. It runs in O(log n) time.",
+              "codeExample": "// Binary Search\nfunction binarySearch(arr, target) {\n  let lo = 0, hi = arr.length - 1;\n  while (lo <= hi) {\n    const mid = Math.floor((lo + hi) / 2);\n    if (arr[mid] === target) return mid;\n    arr[mid] < target ? lo = mid + 1 : hi = mid - 1;\n  }\n  return -1;\n}"
             },
             {
               "name": "DP Fundamentals",
-              "details": "Memoization vs tabulation, identifying subproblems"
+              "details": "Memoization vs tabulation, identifying subproblems",
+              "definition": "Dynamic Programming solves problems by breaking them into overlapping subproblems and storing results to avoid redundant work. Memoization is top-down (recursive + cache), while tabulation is bottom-up (iterative, filling a table). Look for optimal substructure and overlapping subproblems.",
+              "codeExample": "// Fibonacci: memoization (top-down)\nfunction fibMemo(n, memo = {}) {\n  if (n <= 1) return n;\n  if (memo[n]) return memo[n];\n  return memo[n] = fibMemo(n-1, memo) + fibMemo(n-2, memo);\n}"
             },
             {
               "name": "Classic DP",
-              "details": "Climbing stairs, coin change, longest common subsequence, 0/1 knapsack"
+              "details": "Climbing stairs, coin change, longest common subsequence, 0/1 knapsack",
+              "definition": "These are the foundational DP problems you must know. Climbing Stairs counts ways to reach the top, Coin Change finds the fewest coins for an amount, LCS finds the longest shared subsequence of two strings, and 0/1 Knapsack maximizes value within a weight limit.",
+              "codeExample": "// Coin Change (tabulation)\nfunction coinChange(coins, amount) {\n  const dp = new Array(amount + 1).fill(Infinity);\n  dp[0] = 0;\n  for (let i = 1; i <= amount; i++) {\n    for (const coin of coins) {\n      if (coin <= i) dp[i] = Math.min(dp[i], dp[i - coin] + 1);\n    }\n  }\n  return dp[amount] === Infinity ? -1 : dp[amount];\n}"
             }
           ],
           "practice": "Solve 3 binary search + 4 DP problems on LeetCode",
@@ -494,23 +648,33 @@
           "topics": [
             {
               "name": "Core Concepts",
-              "details": "Load balancing, caching (CDN, Redis), database sharding, replication"
+              "details": "Load balancing, caching (CDN, Redis), database sharding, replication",
+              "definition": "Load balancing distributes traffic across multiple servers to avoid overload. Caching stores frequently accessed data closer to the user (CDN for static assets, Redis for dynamic data). Sharding splits a database across multiple machines, and replication copies data to backup servers for reliability.",
+              "codeExample": "// Redis caching pseudocode (Node.js)\nasync function getData(key) {\n  const cached = await redis.get(key);\n  if (cached) return JSON.parse(cached);\n  const data = await db.query(key);\n  await redis.setEx(key, 3600, JSON.stringify(data));\n  return data;\n}"
             },
             {
               "name": "Scalability",
-              "details": "Horizontal vs vertical, CAP theorem, consistent hashing"
+              "details": "Horizontal vs vertical, CAP theorem, consistent hashing",
+              "definition": "Vertical scaling means adding more power (CPU/RAM) to one server. Horizontal scaling means adding more servers. CAP theorem says a distributed system can only guarantee two of three: Consistency, Availability, and Partition tolerance. Consistent hashing distributes data evenly across nodes.",
+              "codeExample": "// Consistent hashing concept (simplified)\nfunction getServer(key, servers) {\n  const hash = hashFunction(key);\n  const index = hash % servers.length;\n  return servers[index];\n}\n// Real consistent hashing uses a ring with virtual nodes"
             },
             {
               "name": "Communication",
-              "details": "REST vs gRPC, sync vs async, message queues, event bus"
+              "details": "REST vs gRPC, sync vs async, message queues, event bus",
+              "definition": "REST uses HTTP/JSON and is simple and widely supported. gRPC uses Protocol Buffers and is faster for service-to-service communication. Synchronous calls wait for a response; asynchronous calls use message queues (like RabbitMQ or Kafka) so services can work independently.",
+              "codeExample": "// Message queue pattern (pseudocode)\nawait messageQueue.publish('order-created', {\n  orderId: 123, userId: 456\n});\n\nmessageQueue.subscribe('order-created', async (msg) => {\n  await sendConfirmationEmail(msg.userId);\n  await updateInventory(msg.orderId);\n});"
             },
             {
               "name": "Design Template",
-              "details": "Requirements → Estimation → API → Data Model → High-Level → Deep Dive"
+              "details": "Requirements → Estimation → API → Data Model → High-Level → Deep Dive",
+              "definition": "This is the step-by-step framework for answering system design interviews. Start by clarifying requirements, estimate scale (users, requests/sec), define the API, design the data model, draw the high-level architecture, then deep dive into specific components like caching or database choices.",
+              "codeExample": "// System design template outline\n// 1. Requirements: functional + non-functional\n// 2. Estimation: DAU, QPS, storage\n// 3. API: GET /api/feed?userId=1&page=1\n// 4. Data Model: Users, Posts, Follows tables\n// 5. High-Level: Client -> LB -> API -> Cache -> DB\n// 6. Deep Dive: News feed ranking algorithm"
             },
             {
               "name": "Practice Designs",
-              "details": "URL Shortener, Twitter Feed, Chat Application, Real-time Stock Dashboard"
+              "details": "URL Shortener, Twitter Feed, Chat Application, Real-time Stock Dashboard",
+              "definition": "These are classic system design interview questions. URL Shortener teaches hashing and base62 encoding. Twitter Feed covers fan-out and ranking. Chat Application covers WebSockets and message storage. Stock Dashboard covers real-time data streaming and pub/sub patterns.",
+              "codeExample": "// URL Shortener core logic\nconst BASE62 = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';\nfunction encode(id) {\n  let short = '';\n  while (id > 0) {\n    short = BASE62[id % 62] + short;\n    id = Math.floor(id / 62);\n  }\n  return short;\n}"
             }
           ],
           "practice": "Design a real-time stock dashboard (relate to BrokerStudio)",
@@ -522,23 +686,33 @@
           "topics": [
             {
               "name": "Docker",
-              "details": "Dockerfile, docker-compose, multi-stage builds, volumes, networking"
+              "details": "Dockerfile, docker-compose, multi-stage builds, volumes, networking",
+              "definition": "Docker packages your application and its dependencies into a container that runs consistently everywhere. A Dockerfile defines how to build an image, docker-compose orchestrates multiple containers, volumes persist data, and networking lets containers communicate.",
+              "codeExample": "# Multi-stage Dockerfile for Node.js\nFROM node:18-alpine AS builder\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci\nCOPY . .\nRUN npm run build\n\nFROM node:18-alpine\nWORKDIR /app\nCOPY --from=builder /app/dist ./dist\nCMD [\"node\", \"dist/index.js\"]"
             },
             {
               "name": "CI/CD",
-              "details": "GitHub Actions, pipelines, build → test → deploy workflow"
+              "details": "GitHub Actions, pipelines, build → test → deploy workflow",
+              "definition": "CI/CD automates building, testing, and deploying your code whenever you push changes. Continuous Integration runs tests on every commit to catch bugs early. Continuous Deployment automatically pushes passing code to production. GitHub Actions is a popular CI/CD platform.",
+              "codeExample": "# GitHub Actions workflow\nname: CI\non: [push, pull_request]\njobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - run: npm ci\n      - run: npm test\n      - run: npm run build"
             },
             {
               "name": "Cloud Services",
-              "details": "AWS (EC2, S3, RDS, Lambda), Azure/GCP equivalents"
+              "details": "AWS (EC2, S3, RDS, Lambda), Azure/GCP equivalents",
+              "definition": "Cloud services provide on-demand computing resources. EC2 gives you virtual servers, S3 stores files, RDS manages databases, and Lambda runs code without managing servers (serverless). Azure and GCP offer similar services with different names.",
+              "codeExample": "// AWS Lambda handler (Node.js)\nexports.handler = async (event) => {\n  const body = JSON.parse(event.body);\n  const result = await processData(body);\n  return {\n    statusCode: 200,\n    body: JSON.stringify({ data: result })\n  };\n};"
             },
             {
               "name": "DNS & Networking",
-              "details": "DNS resolution, SSL/TLS, Cloudflare, reverse proxy (Nginx)"
+              "details": "DNS resolution, SSL/TLS, Cloudflare, reverse proxy (Nginx)",
+              "definition": "DNS translates domain names (like google.com) into IP addresses. SSL/TLS encrypts data in transit using HTTPS. Cloudflare provides CDN, DDoS protection, and DNS management. A reverse proxy like Nginx sits in front of your server to handle load balancing and SSL termination.",
+              "codeExample": "# Nginx reverse proxy config\nserver {\n  listen 80;\n  server_name myapp.com;\n  location / {\n    proxy_pass http://localhost:3000;\n    proxy_set_header Host $host;\n    proxy_set_header X-Real-IP $remote_addr;\n  }\n}"
             },
             {
               "name": "Monitoring",
-              "details": "Logging (ELK), monitoring (Prometheus/Grafana), error tracking (Sentry)"
+              "details": "Logging (ELK), monitoring (Prometheus/Grafana), error tracking (Sentry)",
+              "definition": "Monitoring helps you detect and fix problems in production. The ELK stack (Elasticsearch, Logstash, Kibana) aggregates and searches logs. Prometheus collects metrics and Grafana visualizes them in dashboards. Sentry captures and alerts you about runtime errors.",
+              "codeExample": "// Sentry error tracking setup (Node.js)\nconst Sentry = require('@sentry/node');\nSentry.init({ dsn: 'https://key@sentry.io/123' });\n\napp.use(Sentry.Handlers.requestHandler());\n// ... your routes ...\napp.use(Sentry.Handlers.errorHandler());"
             }
           ],
           "practice": "Write a Dockerfile + docker-compose for a full-stack app, set up GitHub Actions",
@@ -550,7 +724,8 @@
           "topics": [
             {
               "name": "Review",
-              "details": "Solve 5 random LeetCode mediums under time pressure. Practice explaining one system design problem out loud."
+              "details": "Solve 5 random LeetCode mediums under time pressure. Practice explaining one system design problem out loud.",
+              "definition": "This review day is for reinforcing everything from Week 3. Solve coding problems under timed conditions to simulate real interviews, and practice talking through a system design problem out loud to build your verbal communication skills."
             }
           ],
           "practice": "Timed problem solving + verbal system design walkthrough",
@@ -570,23 +745,28 @@
           "topics": [
             {
               "name": "BrokerStudio / BrokerHub",
-              "details": "Architecture, tech choices, challenges, scale considerations"
+              "details": "Architecture, tech choices, challenges, scale considerations",
+              "definition": "Prepare to explain your BrokerStudio/BrokerHub project end to end. Cover the architecture (frontend, backend, database), why you chose specific technologies, what challenges you faced during development, and how the system could scale to handle more users."
             },
             {
               "name": "Stock Comparison Widget",
-              "details": "API integration, rate limiting, caching strategy"
+              "details": "API integration, rate limiting, caching strategy",
+              "definition": "Be ready to discuss how you integrated a third-party stock API, how you handled rate limits (queueing requests, caching responses), and your caching strategy to avoid hitting API limits while keeping data fresh for users."
             },
             {
               "name": "Ticketing System",
-              "details": "Data model, workflow design, real-time updates"
+              "details": "Data model, workflow design, real-time updates",
+              "definition": "Explain your ticketing system's data model (tickets, users, statuses), the workflow for ticket lifecycle (created, assigned, in-progress, resolved), and how you implemented real-time updates so users see changes without refreshing."
             },
             {
               "name": "VitalHops",
-              "details": "DNS/SSL setup, Cloudflare integration, hosting decisions"
+              "details": "DNS/SSL setup, Cloudflare integration, hosting decisions",
+              "definition": "Discuss the infrastructure side of VitalHops: how you set up DNS records, configured SSL certificates for HTTPS, integrated Cloudflare for CDN and protection, and why you chose your specific hosting provider."
             },
             {
               "name": "Storytelling Framework",
-              "details": "What → Why (tech choice) → Challenge → Solution → What I'd change"
+              "details": "What → Why (tech choice) → Challenge → Solution → What I'd change",
+              "definition": "Structure every project answer with this framework: describe what the project does, why you chose the tech stack, what was the biggest challenge, how you solved it, and what you would do differently with more time or experience."
             }
           ],
           "practice": "Write a 2-minute pitch for each project, time yourself",
@@ -598,23 +778,28 @@
           "topics": [
             {
               "name": "Common Questions",
-              "details": "Tell me about yourself, Why this company, Greatest strength/weakness"
+              "details": "Tell me about yourself, Why this company, Greatest strength/weakness",
+              "definition": "These are the most common behavioral questions in any interview. Your 'Tell me about yourself' should be a 90-second elevator pitch covering your background, key skills, and what you're looking for. Be genuine and specific with strengths and weaknesses."
             },
             {
               "name": "Technical Stories",
-              "details": "Hardest bug, architecture decision, performance optimization"
+              "details": "Hardest bug, architecture decision, performance optimization",
+              "definition": "Prepare stories about real technical challenges you've faced. Describe the hardest bug you debugged, an important architecture decision you made and why, and a time you improved performance with specific metrics like response time or load reduction."
             },
             {
               "name": "Collaboration",
-              "details": "Disagreement with team, mentoring, cross-functional work"
+              "details": "Disagreement with team, mentoring, cross-functional work",
+              "definition": "Interviewers want to know you work well with others. Prepare stories about resolving disagreements constructively, helping a junior developer grow, or working with designers, product managers, or other teams to ship a feature."
             },
             {
               "name": "Growth",
-              "details": "How you stay updated, biggest learning, career goals"
+              "details": "How you stay updated, biggest learning, career goals",
+              "definition": "Show that you are a continuous learner. Talk about how you stay current with tech (blogs, courses, side projects), share your biggest professional learning moment, and articulate clear but flexible career goals that align with the company."
             },
             {
               "name": "STAR Format",
-              "details": "Situation → Task → Action → Result (with metrics if possible)"
+              "details": "Situation → Task → Action → Result (with metrics if possible)",
+              "definition": "STAR is a framework for structuring behavioral answers. Describe the Situation (context), the Task (your responsibility), the Action (what you specifically did), and the Result (the outcome, ideally with numbers like 'reduced load time by 40%')."
             }
           ],
           "practice": "Prepare 6-8 STAR stories covering different competencies",
@@ -626,15 +811,18 @@
           "topics": [
             {
               "name": "JS Theory (15 min)",
-              "details": "Closures, event loop, promises"
+              "details": "Closures, event loop, promises",
+              "definition": "In this mock round, spend 15 minutes answering core JavaScript theory questions. Be ready to explain closures with examples, draw the event loop with microtask and macrotask queues, and explain how promises work including chaining and error propagation."
             },
             {
               "name": "Live Coding (20 min)",
-              "details": "Build a small React component with state management"
+              "details": "Build a small React component with state management",
+              "definition": "Spend 20 minutes building a React component from scratch while explaining your thought process. Focus on proper state management with hooks, clean component structure, and handling edge cases. Talk through your decisions as you code."
             },
             {
               "name": "Architecture Discussion (10 min)",
-              "details": "React/Next.js architecture deep dive"
+              "details": "React/Next.js architecture deep dive",
+              "definition": "Spend 10 minutes discussing how you would architect a React or Next.js application. Cover folder structure, rendering strategies (SSR vs SSG vs CSR), data fetching patterns, state management choices, and performance optimization techniques."
             }
           ],
           "practice": "Use Pramp, Interviewing.io, or ask a friend to simulate",
@@ -646,15 +834,18 @@
           "topics": [
             {
               "name": "Backend Theory (15 min)",
-              "details": "Node.js/Django theory, REST API design"
+              "details": "Node.js/Django theory, REST API design",
+              "definition": "Spend 15 minutes answering backend theory questions. Be prepared to explain how Node.js handles concurrency (event loop, non-blocking I/O), Django's MVT architecture and ORM, and REST API design best practices like proper status codes and resource naming."
             },
             {
               "name": "Coding Challenge (20 min)",
-              "details": "SQL problem or API coding challenge"
+              "details": "SQL problem or API coding challenge",
+              "definition": "Spend 20 minutes solving a backend coding challenge. This could be writing a complex SQL query with JOINs and aggregations, or building a small API endpoint. Focus on correctness first, then optimize, and explain your approach throughout."
             },
             {
               "name": "DB Design Discussion (10 min)",
-              "details": "Database design and optimization discussion"
+              "details": "Database design and optimization discussion",
+              "definition": "Spend 10 minutes discussing database design. Be ready to design a schema for a given scenario, explain normalization and when to denormalize, discuss indexing strategies, and talk about SQL vs NoSQL trade-offs for different use cases."
             }
           ],
           "practice": "Practice writing SQL queries under time pressure",
@@ -666,15 +857,18 @@
           "topics": [
             {
               "name": "System Design (30 min)",
-              "details": "Design a real-time notification system or stock trading platform"
+              "details": "Design a real-time notification system or stock trading platform",
+              "definition": "Spend 30 minutes on a full system design problem. Follow the template: clarify requirements, estimate scale, define APIs, design the data model, draw the high-level architecture, then deep dive into key components like message queues for notifications or WebSockets for real-time updates."
             },
             {
               "name": "DSA Round (30 min)",
-              "details": "Solve 2 LeetCode mediums under time pressure"
+              "details": "Solve 2 LeetCode mediums under time pressure",
+              "definition": "Spend 30 minutes solving two medium-difficulty coding problems. Practice the interview approach: clarify the problem, discuss your approach before coding, write clean code, test with examples, and analyze time/space complexity."
             },
             {
               "name": "Communication",
-              "details": "Practice thinking out loud and articulating your approach"
+              "details": "Practice thinking out loud and articulating your approach",
+              "definition": "Communication is as important as the solution itself. Practice narrating your thought process while solving problems: explain what you're considering, why you choose one approach over another, and what trade-offs you see. Silence during interviews can be interpreted negatively."
             }
           ],
           "practice": "Articulation is as important as the solution itself",
@@ -686,23 +880,28 @@
           "topics": [
             {
               "name": "Review All Notes",
-              "details": "Revisit cheat sheets and notes from Weeks 1-3"
+              "details": "Revisit cheat sheets and notes from Weeks 1-3",
+              "definition": "Go through all the notes, cheat sheets, and summaries you created during the first three weeks. Focus on refreshing concepts you marked as weak areas. Skim everything but spend extra time on topics that did not stick well."
             },
             {
               "name": "Re-solve Weak Areas",
-              "details": "Redo any problems you struggled with"
+              "details": "Redo any problems you struggled with",
+              "definition": "Revisit the coding problems and concepts you found most difficult. Solve them again without looking at your previous solution first. If you still struggle, that is the area to focus your final review energy on."
             },
             {
               "name": "Elevator Pitch",
-              "details": "Finalize 'Tell me about yourself' (90 seconds)"
+              "details": "Finalize 'Tell me about yourself' (90 seconds)",
+              "definition": "Polish your 90-second self-introduction. Cover who you are, your experience, your key technical strengths, a highlight project, and what you're looking for in your next role. Practice until it feels natural, not scripted."
             },
             {
               "name": "Interviewer Questions",
-              "details": "Prepare 5-7 thoughtful questions to ask interviewers"
+              "details": "Prepare 5-7 thoughtful questions to ask interviewers",
+              "definition": "Having great questions to ask shows genuine interest. Prepare questions about the team's tech stack, engineering culture, how they handle deployments, what a typical sprint looks like, growth opportunities, and what success looks like in the first 90 days."
             },
             {
               "name": "Portfolio",
-              "details": "Organize portfolio (dynamicat.co) and GitHub repos"
+              "details": "Organize portfolio (dynamicat.co) and GitHub repos",
+              "definition": "Make sure your portfolio site is up to date with your best projects, clean descriptions, and live demo links. Pin your best GitHub repos, add clear README files, and make sure there are no embarrassing commits or exposed secrets in your public repositories."
             }
           ],
           "practice": "Record yourself answering 3 behavioral questions, review for filler words",
@@ -714,7 +913,8 @@
           "topics": [
             {
               "name": "Light Review",
-              "details": "Light review only. Rest well, eat well, sleep well. Confidence matters. You've put in the work!"
+              "details": "Light review only. Rest well, eat well, sleep well. Confidence matters. You've put in the work!",
+              "definition": "Today is about mental preparation, not cramming. Do a light skim of your notes if you want, but the real priority is rest. Eat well, sleep early, and go into your interviews confident. You have spent 27 days preparing systematically and you are ready."
             }
           ],
           "practice": "Relax, recharge, and trust the process",

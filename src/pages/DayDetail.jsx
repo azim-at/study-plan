@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   ArrowLeft, ArrowRight, CheckCircle2, Circle,
-  Lightbulb, ChevronLeft, ChevronRight, Pencil, Save, Clock
+  Lightbulb, ChevronLeft, ChevronRight, ChevronDown, Pencil, Save, Clock, BookOpen
 } from 'lucide-react';
 import { useState } from 'react';
 import { getDayByNumber, getAllDays } from '../data/studyPlan';
@@ -19,6 +19,7 @@ export default function DayDetail() {
   const { toggleTopic, isTopicCompleted, getDayProgress, getNote, setNote } = useProgress();
   const [editingNote, setEditingNote] = useState(false);
   const [noteText, setNoteText] = useState('');
+  const [expandedTopic, setExpandedTopic] = useState(null);
 
   if (!day) {
     return (
@@ -46,6 +47,10 @@ export default function DayDetail() {
   const saveNote = () => {
     setNote(dayNum, noteText);
     setEditingNote(false);
+  };
+
+  const handleToggleExpand = (index) => {
+    setExpandedTopic(expandedTopic === index ? null : index);
   };
 
   return (
@@ -125,39 +130,100 @@ export default function DayDetail() {
         {/* Topics Checklist */}
         <div className="border-t border-slate-700">
           <div className="px-5 sm:px-7 py-3 bg-slate-800/50">
-            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Topics — click to mark as done</p>
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+              Topics — tap the circle to mark done, tap the topic to expand
+            </p>
           </div>
 
           {day.topics.map((topic, index) => {
             const completed = isTopicCompleted(dayNum, index);
+            const isExpanded = expandedTopic === index;
+            const hasDefinition = topic.definition;
+            const hasCode = topic.codeExample;
+
             return (
-              <button
+              <div
                 key={index}
-                onClick={() => toggleTopic(dayNum, index)}
-                className={`w-full flex items-start gap-4 px-5 sm:px-7 py-4 transition-colors cursor-pointer group border-b border-slate-700/50 last:border-b-0 ${
-                  completed ? 'bg-emerald-950/20' : 'hover:bg-slate-700/20'
+                className={`border-b border-slate-700/50 last:border-b-0 ${
+                  completed ? 'bg-emerald-950/20' : ''
                 }`}
               >
-                <div className="shrink-0 mt-0.5">
-                  {completed ? (
-                    <CheckCircle2 size={22} className="text-emerald-400" />
-                  ) : (
-                    <Circle size={22} className="text-slate-600 group-hover:text-slate-400 transition-colors" />
-                  )}
+                {/* Topic Row */}
+                <div className="flex items-start gap-3 px-5 sm:px-7 py-4">
+                  {/* Checkbox */}
+                  <button
+                    onClick={(e) => { e.stopPropagation(); toggleTopic(dayNum, index); }}
+                    className="shrink-0 mt-0.5 cursor-pointer group"
+                  >
+                    {completed ? (
+                      <CheckCircle2 size={22} className="text-emerald-400" />
+                    ) : (
+                      <Circle size={22} className="text-slate-600 group-hover:text-slate-400 transition-colors" />
+                    )}
+                  </button>
+
+                  {/* Topic content - clickable to expand */}
+                  <button
+                    onClick={() => (hasDefinition || hasCode) && handleToggleExpand(index)}
+                    className="flex-1 text-left cursor-pointer"
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1">
+                        <p className={`text-sm font-semibold transition-colors ${
+                          completed ? 'text-slate-500 line-through' : 'text-white'
+                        }`}>
+                          {topic.name}
+                        </p>
+                        <p className={`text-sm mt-1 leading-relaxed ${
+                          completed ? 'text-slate-600' : 'text-slate-400'
+                        }`}>
+                          {topic.details}
+                        </p>
+                      </div>
+                      {(hasDefinition || hasCode) && (
+                        <ChevronDown
+                          size={16}
+                          className={`text-slate-500 shrink-0 mt-1 transition-transform duration-200 ${
+                            isExpanded ? 'rotate-180' : ''
+                          }`}
+                        />
+                      )}
+                    </div>
+                  </button>
                 </div>
-                <div className="flex-1 text-left">
-                  <p className={`text-sm font-semibold transition-colors ${
-                    completed ? 'text-slate-500 line-through' : 'text-white'
-                  }`}>
-                    {topic.name}
-                  </p>
-                  <p className={`text-sm mt-1 leading-relaxed ${
-                    completed ? 'text-slate-600' : 'text-slate-400'
-                  }`}>
-                    {topic.details}
-                  </p>
-                </div>
-              </button>
+
+                {/* Expanded Section */}
+                {isExpanded && (hasDefinition || hasCode) && (
+                  <div className="px-5 sm:px-7 pb-5 pl-12 sm:pl-14 space-y-3">
+                    {/* Definition */}
+                    {hasDefinition && (
+                      <div className="bg-slate-900/60 rounded-lg p-4 border border-slate-700/50">
+                        <div className="flex items-center gap-2 mb-2">
+                          <BookOpen size={13} className="text-blue-400" />
+                          <span className="text-[10px] font-bold text-blue-400 uppercase tracking-wider">Definition</span>
+                        </div>
+                        <p className="text-sm text-slate-300 leading-relaxed">
+                          {topic.definition}
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Code Example */}
+                    {hasCode && (
+                      <div className="bg-slate-950 rounded-lg border border-slate-700/50 overflow-hidden">
+                        <div className="flex items-center gap-2 px-4 py-2 bg-slate-900/80 border-b border-slate-700/50">
+                          <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">Code Example</span>
+                        </div>
+                        <pre className="p-4 overflow-x-auto">
+                          <code className="text-sm text-slate-300 font-mono leading-relaxed whitespace-pre">
+                            {topic.codeExample}
+                          </code>
+                        </pre>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
             );
           })}
         </div>
